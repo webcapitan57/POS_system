@@ -1,0 +1,256 @@
+﻿/* Group/Index */
+.groups-with-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action-buttons {
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 0 12px;
+    margin-top: 9px;
+    height: 2.5rem;
+}
+
+.action-buttons > a {
+    text-decoration: none;
+    transition: color 0.2s;
+    box-sizing: border-box;
+    color: var(--secondary-color);
+    flex: 0 0 25%;
+    display: flex;
+    justify-content: center;
+}
+
+#section-tasks {
+    margin-top: 30px;
+}
+
+/* Group/Edit */
+#btn-edit-back {
+    margin-bottom: 10px;
+}
+
+.btn-add-task {
+    color: var(--primary-color) !important;
+}
+
+.btn-add-task:hover {
+    cursor: pointer;
+}
+
+.btn-remove-task {
+    color: var(--secondary-color) !important;
+}
+
+.btn-remove-task:hover {
+    cursor: pointer;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+    color: var(--secondary-color);
+}
+
+.bg-primary:hover {
+    opacity: 90%;
+}
+
+#setTasks, #teacherTasks {
+    border: 1px solid #e5e5e5 !important;
+}
+
+#tables-set {
+    padding-right: 5px !important;
+}
+
+#tables-teacher {
+    padding-left: 5px !important;
+}
+
+/* Group/Remove */
+#deleteGroup {
+    padding-top: 5%;
+    text-align: center;
+}
+
+#deleteGroup > form > div {
+    display: flex;
+    justify-content: space-around;
+    width: 35%;
+    margin: auto;
+}
+
+/* Group/Join */
+.join-group{
+    margin-top: 10px;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+}
+
+.grid-item {
+    text-align: left;
+    place-self: center;
+}
+
+#join-help {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+#join-help > a {
+    color: var(--secondary-color);
+}
+
+#join-help > a:hover {
+    opacity: 90%;
+}
+
+#join-help > a > img {
+    width: 50px;
+    height: 50px;
+}
+
+.join-input{
+    width: 50%;
+}
+
+#group-login-flex{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hoogte{
+    height: 75%;
+}
+
+
+.card{
+    margin-right: 36px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    width: 18rem;
+}
+
+.card-container{
+    display: flex;
+    
+}
+
+.leeg{
+    opacity: 0;
+}
+
+.card-add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Group/StartSession */
+
+.domain-link-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 5% ;
+    padding-top: 5%;
+}
+.qr {
+
+    height: 50%;
+    width: 50%;
+}
+
+.qr-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-top: 2px dashed black;
+    padding-top: 5%;
+}
+
+/* Group create */
+.gt-pw-info-icon-label{
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-info{
+    padding-top: 5px;
+}
+
+.gt-pw-info{
+    padding-right: 9px;
+    padding-left: 0;
+}
+.group-create-title-button{
+    display: flex;
+    justify-content: space-between;
+}
+
+.create-group{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* tooltip Usage: password guestteacher */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+/* rescaling */
+@media (max-width: 992px) {
+    #group-join-img{
+        visibility: hidden;
+        height: 1px;
+        width: 1px;
+        font-size: 1px;
+        right: 9999px;
+        color: transparent;
+    }
+    
+    .col{
+        flex-basis:auto;
+        flex-grow: 0;
+    }
+    
+    #group-join-general{
+        margin-top: 25%;
+    }
+}
+
+.btn-klaar{
+    
+}

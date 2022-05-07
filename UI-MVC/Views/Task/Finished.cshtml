@@ -1,0 +1,27 @@
+﻿@model POC.BL.Domain.setup.SetUp
+
+@{
+    System.Diagnostics.Debug.Assert(Model.Logo != null, "Model.Logo != null");
+    
+    ViewBag.SetupLogo = Model.Logo.Picture;
+    ViewBag.Title = "Klaar";
+    ViewBag.SetupName = Model.Name;
+    Layout = "_LayoutStudent";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+
+<div id="finished-div">
+    <h1>Bedankt voor je deelname! :)</h1>
+    <img src="@ViewBag.image" alt="indien-gif"/>
+    <a class="btn btn-secondary" asp-action="Join" asp-controller="Group">Terug naar homepagina</a>
+</div>
+
+<div hidden id="primColor">@Model.PrimColor</div>
+<div hidden id="secColor">@Model.SecColor</div>
+
+@section Scripts {
+    <script type="module" src="~/dist/task.entry.js"></script>
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+
+}

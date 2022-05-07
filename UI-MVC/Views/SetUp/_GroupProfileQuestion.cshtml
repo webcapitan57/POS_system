@@ -1,0 +1,28 @@
+﻿@model POC.BL.Domain.profile.GroupProfileQuestion
+
+<div id="groupProfileQuestion_@Model.ProfileQuestionId">
+    <br/>
+    <h4>
+        Open Profiel Vraag
+        <button class="btn" id="removeGroupProfileQuestion_@Model.ProfileQuestionId">
+            <img src="~/resources/Icons/cross.svg" alt="verwijder">
+        </button>
+    </h4><br/>
+
+    <div class="form-group">
+        <label>Vraag:</label>
+        <input id="Question_@Model.ProfileQuestionId" asp-for="Question" type="text" placeholder="Geef hier je open vraag" class="form-control"/>
+        <span id="QuestionSpan_@Model.ProfileQuestionId"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Categorie:</label>
+        <input id="Description_@Model.ProfileQuestionId" asp-for="Description" type="text" placeholder="Kernwoord (max 20 karakters)" class="form-control"/>
+        <span id="DescriptionSpan_@Model.ProfileQuestionId"></span>
+    </div>
+    
+    <div class="form-group">
+        <label>Verplicht</label>
+        <input id="IsRequired_@Model.ProfileQuestionId" asp-for="IsRequired" type="checkbox"/>
+    </div>
+</div>

@@ -1,0 +1,62 @@
+﻿@model UI_MVC.Models.PhotoViewModel
+
+@{
+    ViewBag.Title = "Foto's";
+    ViewBag.SetupName = @Model.SetupName;
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+@switch (@Model.PreviousAction)
+{
+    case "Show":
+        <a class="btn-primary btn" asp-action="Show" asp-route-groupCode="@Model.GroupCode" asp-route-studentId="@Model.StudentId">Terug naar taken</a>
+        break;
+    case "ShowQuestions":
+        <a class="btn-primary btn" asp-action="ShowQuestions" asp-route-deliveryId="@Model.DeliveryId"
+           asp-route-setUpId="@Model.SetupId">Terug naar vragen</a>
+        break;
+    case "ShowAnswers":
+        <a class="btn-primary btn" asp-action="ShowAnswers" asp-route-photoQuestionId="@Model.PhotoQuestionId" 
+           asp-route-deliveryId="@Model.DeliveryId" asp-route-setUpId="@Model.SetupId">Terug naar antwoord</a>
+        break;
+}
+
+<form enctype="multipart/form-data" asp-action="UploadPhoto">
+
+    @Html.HiddenFor(modelItem => Model.StudentId)
+    @Html.HiddenFor(modelItem => Model.GroupCode)
+    @Html.HiddenFor(modelItem => Model.DeliveryId)
+    @Html.HiddenFor(modelItem => Model.PhotoQuestionId)
+    @Html.HiddenFor(modelItem => Model.PreviousAction)
+    @Html.HiddenFor(modelItem=>Model.SetupId)
+    
+    <div class="form-group">
+        <label asp-for="Image" class="control-label"></label>
+        <div class="custom-file">
+            <input asp-for="Image" class="custom-file-input" style="display: none;" id="customFile" >
+            <label for="customFile" class="custom-file-label"></label>
+
+        </div>
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="submit" class="btn btn-primary"/>
+    </div>
+
+    @if (Model.Photos!=null)
+    {
+        for (var i = 0; i < Model.Photos.Count; i++)
+        {
+            @Html.HiddenFor(modelItem => @Model.Photos[i])
+
+            <img src="~/images/@(Model.Photos[i].Picture)"
+                 class="rounded-circle"
+                 height="100" width="100"
+                 asp-append-version="true" alt=""/>
+        }
+    }
+</form>
+
+@section Scripts {
+    <script type="module" src="~/dist/task.entry.js"></script>
+}

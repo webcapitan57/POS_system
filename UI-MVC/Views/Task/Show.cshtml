@@ -1,0 +1,123 @@
+﻿@using POC.BL.Domain.task
+@using POC.BL.Domain.delivery
+@model UI_MVC.Models.ShowViewModel
+
+@{
+    System.Diagnostics.Debug.Assert(Model.SetUp.Logo != null, "Model.SetUp.Logo != null");
+    
+    ViewBag.Title = "Tasks";
+    ViewBag.bucketName = ViewBag.bucketName;
+    ViewBag.SetupLogo = Model.SetUp.Logo.Picture;
+    ViewBag.SetupName = Model.SetUp.Name;
+    Layout = "_LayoutStudent";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+
+<div hidden id="primColor">@Model.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.SetUp.SecColor</div>
+
+<!-- Upload photo button and uploaded photos -->
+<div id="task-photos">
+    <partial name="_UploadedPhotosPartial" model="@Model.Deliveries.First()"/>
+</div>
+
+<!-- Group information and submit button -->
+<h2>@Model.Group.Name</h2>
+<div id="task-submit">
+    <div>
+        <i>Begeleider: @Model.Group.Teacher.UserAccount.UserName.Split("#")[0]</i>
+    </div>
+    <a class="btn btn-primary" asp-action="Finalize"
+       asp-route-groupCode="@Model.Group.GroupCode"
+       asp-route-setupId="@Model.SetUp.SetUpId"
+       asp-route-studentId="@Model.Deliveries.First().Student.StudentId">
+        Taken indienen
+    </a>
+</div>
+
+<!-- List of all tasks -->
+@foreach (var delivery in @Model.Deliveries)
+{
+    @if (delivery.GetUnansweredPhotoQuestions().Count > 0)
+    {
+        <div>
+            @switch (delivery)
+            {
+                case SetTaskDelivery setTaskDelivery:
+                    <div id="task-item" class="task-item task-item-incomplete lf-element-sec">
+                        <a asp-controller="Task" asp-action="ShowQuestions" asp-route-setupId="@Model.SetUp.SetUpId" asp-route-deliveryId="@setTaskDelivery.TaskDeliveryId"
+                           asp-route-studentId="@Model.Deliveries.First().Student.StudentId"
+                           data-toggle="tooltip" data-placement="bottom" title="Naar fotovragen van @setTaskDelivery.SetTask.Title" >
+                            <p>
+                                @setTaskDelivery.SetTask.Title
+                            </p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    break;
+                case TeacherTaskDelivery teacherTaskDelivery:
+                    <div id="task-item" class=" task-item task-item-incomplete lf-element-sec">
+                        <a asp-controller="Task" asp-action="ShowQuestions" asp-route-setupId="@Model.SetUp.SetUpId" asp-route-deliveryId="@teacherTaskDelivery.TaskDeliveryId"
+                           asp-route-studentId="@Model.Deliveries.First().Student.StudentId"
+                           data-toggle="tooltip" data-placement="bottom" title="Naar fotovragen van @teacherTaskDelivery.TeacherTask.Title">
+
+                            <p>
+                                @teacherTaskDelivery.TeacherTask.Title
+                            </p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    break;
+            }
+        </div>
+    }
+    else
+    {
+        <div>
+            @switch (delivery)
+            {
+                case SetTaskDelivery setTaskDelivery:
+                    <div id="task-item" class="task-item task-item-complete lf-element-prim">
+                        <a asp-controller="Task" asp-action="ShowQuestions" asp-route-setupId="@Model.SetUp.SetUpId" asp-route-deliveryId="@setTaskDelivery.TaskDeliveryId"
+                           asp-route-studentId="@Model.Deliveries.First().Student.StudentId"
+                           data-toggle="tooltip" data-placement="bottom" title="Naar fotovragen van @setTaskDelivery.SetTask.Title" >
+                            <p>
+                                @setTaskDelivery.SetTask.Title
+                            </p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    break;
+                case TeacherTaskDelivery teacherTaskDelivery:
+                    <div id="task-item" class=" task-item task-item-complete lf-element-prim">
+                        <a asp-controller="Task" asp-action="ShowQuestions" asp-route-setupId="@Model.SetUp.SetUpId" asp-route-deliveryId="@teacherTaskDelivery.TaskDeliveryId"
+                           asp-route-studentId="@Model.Deliveries.First().Student.StudentId"
+                           data-toggle="tooltip" data-placement="bottom" title="Naar fotovragen van @teacherTaskDelivery.TeacherTask.Title">
+
+                            <p>
+                                @teacherTaskDelivery.TeacherTask.Title
+                            </p>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                              <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    break;
+            }
+        </div>
+    }
+}
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/uploadedPhotos.entry.js" defer></script>
+    <script type="module" src="~/dist/task.entry.js"></script>
+}

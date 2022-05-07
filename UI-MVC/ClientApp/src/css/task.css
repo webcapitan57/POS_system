@@ -1,0 +1,252 @@
+﻿/* Task/Show, Task/ShowQuestions, Task/ShowAnswers */
+#task-submit {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.task-title {
+    background-color: var(--primary-color) !important;
+    color: white;
+    border-radius: 10px;
+    height: 100px;
+}
+
+.task-title > a {
+    height: 100%;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+}
+
+.question-info {
+    margin: 25px;
+}
+
+.task-item {
+    color: white;
+    border-radius: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.task-item-incomplete {
+    background-color: var(--secondary-color) !important;
+}
+
+.task-item-complete {
+    background-color: var(--primary-color) !important;
+}
+
+.task-item > a {
+    height: 100%;
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+    justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+}
+
+.task-item > a > p, .task-title > a > p {
+    margin-bottom: 0;
+    margin-left: 50px;
+}
+
+.task-item > a > svg {
+    margin-right: 30px;
+}
+
+#tips {
+    background-color: whitesmoke;
+    border-radius: 29px 29px 0 29px;
+    color: #202020;
+    margin-bottom: 40px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#tips > p {
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.btn-hint {
+    background: white;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: none;
+    position: absolute;
+    top: -25px;
+    right: -25px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-hint:focus {
+    outline: none;
+}
+
+.btn-hint > svg {
+    width: 30px;
+    height: 30px;
+    margin: auto;
+    fill: var(--secondary-color);
+}
+
+.btn-hint-on > svg {
+    fill: var(--primary-color);
+}
+
+.question-with-hint-btn {
+    position: relative;
+}
+
+.task-side-questions {
+    background-color: whitesmoke;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+}
+
+.task-side-questions > img {
+    width: 25%;
+    border-radius: 10px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.task-side-questions > div {
+    width: 75%;
+}
+
+
+/* Photo bar */
+#task-photos, #sentPhotosDiv, #AssignedPhotosDiv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+#task-photos {
+    margin-bottom: 20px;
+}
+
+.add-photo-button {
+    width: 100px;
+    height: 100px;
+    fill: var(--primary-color);
+    margin-right: 10px;
+    margin-bottom: 0 !important;
+}
+
+.add-photo-button:hover, .delete-photo-button:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.delete-photo-button {
+    background: transparent;
+    border: transparent;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.delete-photo-button:focus {
+    outline: none;
+}
+
+.delete-photo-button > svg {
+    width: 32px;
+    height: 32px;
+    fill: var(--primary-color);
+    border-radius: 50%;
+    background-color: white;
+}
+
+.task-uploaded-photo {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.task-uploaded-photo > img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Task/Check */
+#check-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#check-form > div {
+    display: flex;
+    justify-content: center
+}
+
+#check-form > div > a, #check-form > div > input {
+    margin: 5px;
+}
+
+/* Task/Finished */
+#finished-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#finished-div > * {
+    margin-bottom: 20px;
+}
+
+#finished-div > img {
+    height: 500px;
+}
+
+/*Task ShowAnswer*/
+#AssignedPhotosDiv {
+    height: 110px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.selected-photo {
+    height: 110px;
+}
+
+.selected-photo > .delete-photo-button {
+    bottom: 10px;
+}
+
+/* Location */
+#mapCanvas {
+    margin-top: 10px;
+    width: 100%;
+    height: 500px;
+    overflow: visible;
+    border-radius: 10px;
+}
+
+#map {
+    margin-top: 30px;
+}
+

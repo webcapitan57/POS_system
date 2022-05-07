@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Help";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+<a class="btn btn-secondary" asp-action="Join" asp-controller="Group">Terug naar homepagina</a>
+<br>
+<br>
+
+<h1>Help</h1>
+<h5>Toetreden tot een groep</h5>
+<p>Met behulp van de groepscode kan u toetreden tot een groep. Het toetreden van een groep kan u doen op de home pagina.</p>
+<h5>Profiel vragen</h5>
+<p>Nadat u toegetreden bent tot een groep, kan het zijn dat u een paar vragen te zien krijgt. Wanneer u deze vragen al eens beantwoord heeft, zal u deze niet meer te zien krijgen.</p>
+<h5>Vragen beantwoorden</h5>
+<p>Linksboven ziet u een grote plus knop. Wanneer u hierop drukt opent er een scherm. Op dit scherm kan u 1 of meerdere foto's selecteren die u wilt uploaden. Op het scherm ziet u 1 of meerdere taken.
+    U kan de vragen van deze taken zien door op de naam te drukken. U kan de geüplode foto('s) koppelen aan een vraag door eerst op de vraag te drukken en daarna te drukken op de foto.
+    Wanneer u een foto heeft gekoppeld aan een vraag ziet u eventuele deelvragen. Het antwoorden op deze deelvragen is vrijblijvend. Wanneer u een vraag heeft beantwoord ziet u bij het overzicht een vinkje verschijnen.
+    Dit betekent dat u de vraag heeft beantwoord. Wanneer u alle vragen van een categorie heeft beantwoord zal er een vinkje verschijnen bij de taak. Wanneer u alle vragen heeft beantwoord drukt u op de knop "Taken indienen" om alles definitief in te leveren.
+</p>
+
+@section Scripts {
+    <script type="module" src="~/dist/group.entry.js" defer></script>
+}

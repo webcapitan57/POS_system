@@ -1,0 +1,264 @@
+﻿input{
+    border: transparent;
+}
+
+.bigFlexDiv{
+    min-width: 45%;
+    padding: 20px;
+    margin: 10px;
+    float: left;
+}
+.smallFlexDiv{
+    min-width: 20%;
+    padding: 20px;
+    margin: 10px;
+    float: left;
+}
+
+textarea{
+    width: 95%;
+}
+
+.floatRightButton{
+    float: right;
+    border: 2px solid black;
+    border-radius: 8px;
+    font-family: Calibri, serif;
+    font-size: 20px;
+    color: black;
+    vertical-align: middle;
+}
+
+.optionsTable{
+    width: 100%;
+    border: 2px solid black;
+    padding: 5px;
+    margin: 10px;
+}
+table.optionsTable > tr{
+    border: 2px solid black;
+}
+table.optionsTable > tr > td{
+    border: 2px solid black;
+}
+
+/*AanmakenOpdracht*/
+.opslaan-vragen {
+    margin-left: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 20px;
+
+}
+
+.hoofd-vraag-div {
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 20px 20px 0;
+    padding: 10px;
+}
+
+.photo-vraag-div {
+    width: 90%;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 40px 20px 0 70px;
+    padding: 10px;
+    display: table;
+    float: right;
+
+}
+
+.side-vraag-div {
+    width: 75%;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 10px 20px 0 50px;
+    padding: 10px;
+    display: table;
+    float: right;
+}
+
+#content-wrap.pb-3 {
+    padding: 0 !important;
+}
+
+.btn-add-photoquestion {
+    margin-top: 8px;
+
+}
+
+.input-fw {
+    width: 100%;
+
+}
+
+.input-pw {
+    width: 90%;
+
+}
+
+.removebtn {
+    border: transparent;
+    border-radius: 50%;
+    background-color: transparent;
+}
+
+.removebtn:focus {
+    outline: none;
+}
+
+
+.table-teachers {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+.removebtn > * {
+    pointer-events: none;
+}
+
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #D8D8D8;
+
+}
+
+.btn-right {
+    float: right;
+}
+
+/* button fotovraag toevoegen rechts*/
+.display-flex {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-x {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+.intput-border {
+    border: transparent;
+}
+
+.intput-border:focus {
+    outline-color: transparent;
+}
+
+
+#AssignedPhotosDiv {
+    height: 110px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.selected-photo {
+    height: 110px;
+}
+
+.selected-photo > .delete-photo-button {
+    bottom: 10px;
+}
+
+.btn-add-setup {
+    margin-bottom: 8px;
+}
+
+.removebt > img {
+    height: 20px;
+    width: 20px;
+}
+
+@media (min-width: 2000px) {
+    .removebt > img {
+        height: 60px;
+        width: 60px;
+    }
+}
+@media (min-width: 1200px) {}
+@media (min-width: 992px) {}
+@media (min-width: 768px) {}
+@media (min-width: 576px) {}
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+    border-radius: 5px;
+    display: table-cell;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+img {
+    border-radius: 5px 5px 0 0;
+}
+
+.container {
+    padding: 2px 16px;
+}
+
+.create-task-head{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Location */
+.map {
+    width: 100%;
+    height: 400px;
+    border-radius: 10px;
+}
+
+
+/* tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 240px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 105%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.extra-margin{
+    margin-top: 10px;
+}
+
+.radius-info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-map{
+    margin-top: 65px;
+}
+

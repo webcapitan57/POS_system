@@ -1,0 +1,54 @@
+﻿@using POC.BL.Domain.task
+@using UI_MVC.Models
+@model EditTaskModel
+@{
+    ViewBag.SetupName = Model.Setup.Name;
+    ViewBag.SetupLogo = Model.Setup.Logo.Picture;
+    Layout = "_Layout";
+}
+
+
+<link rel="stylesheet" href="@Url.Content("~/dist/createTask.css")" type="text/css"/>
+
+@Html.HiddenFor(modelItem => Model.SetUpId)
+@Html.HiddenFor(modelItem => Model.TeacherId)
+@Html.HiddenFor(modelItem => Model.TaskId)
+@Html.HiddenFor(modelItem => Model.NewTask)
+
+<div class="opslaan-vragen">
+    <button id="saveTask" name="save" class="btn btn-success " value="opdracht opslaan">
+        <img src="~/resources/Icons/save-white.svg" alt="save button">
+        opdracht opslaan
+    </button>
+    <span id="superSpan"></span>
+</div>
+
+<div class="hoofd-vraag-div">
+    <h2>
+        <input id="taskTitle" name="question" placeholder="[Geef een categorie titel voor de fotovragen]" class="input-fw intput-border" value="@Model.Title">
+    </h2> 
+    <span id="titleSpan"></span>
+    <hr>
+    <input id="taskInfo" name="opdrachtOmschrijving" placeholder="[Geef hier de opdrachtbeschrijving]" class="input-fw intput-border" value="@Model.Info"/>
+    <br>
+    <div class="display-flex">
+        <button id="AddPhotoQuestion" class="btn-add-photoquestion btn-secondary btn">
+            <img src="~/resources/Icons/plus-circle-white.svg" alt="Add">
+            Fotovraag toevoegen
+        </button>
+    </div>
+</div>
+
+@* <button id="AddPhotoQuestion">Add Photo Question</button> *@
+<div id="allPhotoQuestionsDiv">
+
+</div>
+<div hidden id="primColor">@Model.Setup.PrimColor</div>
+<div hidden id="secColor" >@Model.Setup.SecColor</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/editTask.entry.js" defer></script>
+    <script type="module" src="~/dist/createTask.entry.js" defer></script>
+}

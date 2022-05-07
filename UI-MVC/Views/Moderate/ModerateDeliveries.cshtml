@@ -1,0 +1,263 @@
+﻿@model UI_MVC.Models.Moderate.ModerateDeliveriesViewModel
+
+@{
+    System.Diagnostics.Debug.Assert(Model.Teacher.SetUp.Logo != null, "Model.Teacher.SetUp.Logo != null");
+
+    ViewBag.SetupLogo = Model.Teacher.SetUp.Logo.Picture;
+    ViewBag.SetupName = Model.Teacher.SetUp.Name;
+    ViewBag.Title = "Moderatie";
+    Layout = "_Layout";
+
+    <link rel="stylesheet" href="@Url.Content("~/dist/moderate.css")" type="text/css"/>
+}
+
+<div id="teacherId" hidden>@Model.Teacher.UserId</div>
+<span id="group_@Model.Group.GroupCode" hidden></span>
+<span id="bucket" hidden>@ViewBag.bucketName</span>
+<div hidden id="primColor">@Model.Teacher.SetUp.PrimColor</div>
+<div hidden id="secColor">@Model.Teacher.SetUp.SecColor</div>
+
+<!-- Group name with present button -->
+<div id="group-name-with-buttons">
+    <h2>@Model.Group.Name</h2>
+    <a class="btn btn-primary" asp-action="ShowDeliveriesGallery" asp-route-groupCode="@Model.Group.GroupCode">Presenteren</a>
+</div>
+
+<!-- Filters, Accept Deliveries and Show Flagged -->
+<div id="filter-bar">
+    <div id="filters">
+        @if (Model.Filters.Count == 0)
+        {
+            @foreach (var description in Model.StudentProfileQuestions
+                .Select(sq => sq.Description).Distinct())
+            {
+                <div class="filter">
+                    <select class="form-control filter-select" id="@description">
+                        <option value="">@description</option>
+                    </select>
+                </div>
+            }
+        }
+        else
+        {
+            @foreach (var description in Model.Filters.Select(f => f.Description).Distinct())
+            {
+                <div class="filter">
+                    <select class="form-control filter-select" id="@description">
+                        <option selected value="">@description</option>
+                        @foreach (var filter in Model.Filters.Where(f => f.Description == description).Select(f => f.Value).Distinct())
+                        {
+                            <option value="@filter">@filter</option>
+                        }
+                    </select>
+                </div>
+            }
+        }
+
+        <div id="custom-filter" class="custom-filter" style="display: none">
+            <select id="custom-filter-select" class="form-control">
+                <option selected value="">Eigen Tags</option>
+            </select>
+        </div>
+
+        <div id="save-filter-profile-div">
+            <input id="filter-profile-name" type="text" class="form-control col-7" placeholder="Filternaam"/>
+            <button id="save-filter-profile" class="btn btn-primary">Opslaan</button>
+        </div>
+
+    </div>
+    <div id="load-filter-profile" class="col-4">
+
+        <select class="form-control" id="filter-profiles">
+            <option value="">Laad filterprofiel</option>
+            @if (Model.Teacher.FilterProfiles.Count != 0)
+            {
+                @foreach (var filterProfile in Model.Teacher.FilterProfiles)
+                {
+                    <option value="@filterProfile.FilterProfileId">@filterProfile.ProfileName</option>
+                }
+            }
+        </select>
+
+    </div>
+</div>
+<div id="moderate-sliders">
+    <div id="moderate-action-buttons">
+        <div>
+            <p>Accepteer inzendingen</p>
+            <label class="switch">
+                <input id="acceptDeliveries" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div>
+            <p>Gemarkeerde foto's tonen</p>
+            <label class="switch">
+                <input id="showFlagged" type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- Deliveries -->
+<div id="photos" class="row">
+    <section id="notFlagged">
+        <ul id="notFlaggedList" class="moderate-list">
+            @foreach (var answer in Model.Deliveries.Where(t => t.Finished).SelectMany(t => t.Answers).Where(a => !a.Flagged))
+            {
+                <li>
+                    <img id="gallery-image_@answer.AnswerId" src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@answer.AssignedPhoto.Picture" alt="" class="gallery-image">
+                </li>
+            }
+        </ul>
+
+    </section>
+    <section id="flagged" style="display: none">
+        <button class="btn btn-danger" id="removeFlaggedPhotos">Verwijder geflagde foto's</button>
+        <ul id="flaggedList" class="moderate-list">
+            @foreach (var answer in Model.Deliveries.Where(t => t.Finished).SelectMany(t => t.Answers).Where(a => a.Flagged))
+            {
+                <li>
+                    <img id="gallery-image_@answer.AnswerId" src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@answer.AssignedPhoto.Picture" alt="" class="gallery-image">
+                </li>
+            }
+        </ul>
+    </section>
+</div>
+
+<!-- Answer details and Side Answers -->
+<div id="detailDiv">
+    @foreach (var answer in @Model.Deliveries.SelectMany(d => d.Answers))
+    {
+        <div id="answerDetails_@answer.AnswerId" style="display: none" class="gallery-side-answers">
+            <button class="btn btn-secondary btn-gallery-back">Terug</button>
+            <h5>@answer.AnsweredQuestion.Question</h5>
+            <div>
+                <img src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@answer.AssignedPhoto.Picture" alt="@answer.AssignedPhoto.Picture" class="side-answers-img">
+
+                <div id="moderate-answer-buttons_@answer.AnswerId" class="moderate-answer-buttons">
+                    @if (Model.LikedAnswers.Contains(answer))
+                    {
+                        <div id="like-buttons_@answer.AnswerId" class="gallery-like-buttons gallery-liked">
+                            <div class="gallery-btn-like">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                </svg>
+                            </div>
+
+                            <div class="gallery-btn-unlike">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="like-buttons_@answer.AnswerId" class="gallery-like-buttons">
+                            <div class="gallery-btn-like">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart" viewBox="0 0 16 16">
+                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                </svg>
+                            </div>
+
+                            <div class="gallery-btn-unlike">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    }
+
+                    @if (@answer.Flagged)
+                    {
+                        <div id="flag-buttons_@answer.AnswerId" class="moderate-flag-buttons moderate-flagged">
+                            <div class="moderate-btn-flag">
+                                <div id="flag-button_@answer.AnswerId" class="flag-button">
+
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-flag" viewBox="0 0 16 16">
+                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="moderate-btn-unflag">
+                                <div id="unflag-button_@answer.AnswerId" class="unflag-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="flag-buttons_@answer.AnswerId" class="moderate-flag-buttons">
+                            <div class="moderate-btn-flag">
+                                <div id="flag-button_@answer.AnswerId" class="flag-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-flag" viewBox="0 0 16 16">
+                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="moderate-btn-unflag">
+                                <div id="unflag-button_@answer.AnswerId" class="unflag-button">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-flag-fill" viewBox="0 0 16 16">
+                                        <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div id="deleteAnswer_@answer.AnswerId" class="moderate-delete-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div id="moderate-answer-tags_@answer.AnswerId" class="moderate-answer-tags">
+                    <h6>Tags</h6>
+                    <div id="tags_@answer.AnswerId" class="moderate-tags">
+                        @foreach (var tag in @answer.TaskDelivery.Tags)
+                        {
+                            <div class="moderate-profile-tag" name="@tag.Value">
+                                @(tag.Description + ":" + @tag.Value)
+                            </div>
+                        }
+                    </div>
+                    <div id="new-tag">
+                        <input id="tagInput_@answer.AnswerId" class="new-tag-input form-control" type="text" placeholder="Nieuwe tag..."/>
+                        <button id="tagAddBtn_@answer.AnswerId" class="btn-add-tag btn btn-primary">Toevoegen</button>
+                    </div>
+                </div>
+            </div>
+            @if (answer.SideAnswers.Count != 0)
+            {
+                <div id="side-answers_@answer.AnswerId" class="moderate-side-answers">
+                    <h6>Deelvragen</h6>
+                    @foreach (var sideAnswer in answer.SideAnswers)
+                    {
+                        <div class="form-group">
+                            <label>@sideAnswer.AnsweredQuestion.Question</label>
+                            <input class="form-control" disabled value="@sideAnswer.GivenAnswer">
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
+
+
+@section Scripts {
+    <script type="module" src="~/dist/saveFilterProfile.entry.js" defer></script>
+    <script type="module" src="~/dist/filterProfilesVset.entry.js" defer></script>
+    <script type="module" src="~/dist/moderateSelect.entry.js" defer></script>
+    <script type="module" src="~/dist/moderateDeliveries.entry.js" defer></script>
+    <script type="module" src="~/dist/moderate.entry.js" defer></script>
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+}

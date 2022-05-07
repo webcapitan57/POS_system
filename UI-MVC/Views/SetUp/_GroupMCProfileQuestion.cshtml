@@ -1,0 +1,40 @@
+﻿@model POC.BL.Domain.profile.GroupMCProfileQuestion
+
+<div id="groupProfileQuestion_@Model.ProfileQuestionId">
+    <br/>
+    <h4>
+        MC Profiel Vraag
+        <button class="btn" id="removeGroupProfileQuestion_@Model.ProfileQuestionId">
+            <img src="~/resources/Icons/cross.svg" alt="verwijder" class="">
+        </button>
+    </h4><br/>
+
+    <div class="form-group">
+        <label>Vraag:</label>
+        <input id="Question_@Model.ProfileQuestionId" asp-for="Question" type="text" placeholder="Geef hier je meerkeuzevraag" class="form-control"/>
+        <span id="QuestionSpan_@Model.ProfileQuestionId"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Categorie:</label>
+        <input id="Description_@Model.ProfileQuestionId" asp-for="Description" type="text" placeholder="Kernwoord (max 20 karakters)" class="form-control"/>
+        <span id="DescriptionSpan_@Model.ProfileQuestionId"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Verplicht</label>
+        <input id="IsRequired_@Model.ProfileQuestionId" asp-for="IsRequired" type="checkbox"/>
+    </div>
+    <button class="btn btn-light btn-options" id="addGroupProfileOption_@Model.ProfileQuestionId">
+        <img src="~/resources/Icons/plus-square-dotted.svg" alt="+ extra optie">
+        Voeg optie toe
+    </button>
+
+    <div id="groupOptions_@Model.ProfileQuestionId">
+        @foreach (var option in Model.GroupProfileOptions)
+        {
+            <partial name="_GroupProfileOption" for="@option"/>
+        }
+    </div>
+
+</div>

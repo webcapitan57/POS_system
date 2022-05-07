@@ -1,0 +1,31 @@
+﻿@model UI_MVC.Models.Task.CheckViewModel
+
+@{
+    System.Diagnostics.Debug.Assert(Model.SetUp.Logo != null, "Model.SetUp.Logo != null");
+    
+    ViewBag.SetupLogo = Model.SetUp.Logo.Picture;
+    ViewBag.Title = "Klaar";
+    ViewBag.SetupName = Model.SetUp.Name;
+    Layout = "_LayoutStudent";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+
+<form id="check-form" asp-controller="Task" asp-route-_groupCode="@Model.Group.GroupCode" asp-route-_currentStudentId="@Model.Deliveries.First().Student.StudentId" asp-action="CheckConfirmed" method="post" xmlns="http://www.w3.org/1999/html">
+    <p>Er zijn vragen die nog niet beantwoord zijn. Ben je zeker dat je je taken wilt indienen?</p>
+    <div>
+        <a class="btn btn-danger" asp-action="Show"
+           asp-route-groupCode="@Model.Group.GroupCode"
+           asp-route-studentId="@Model.Deliveries.First().Student.StudentId">
+            Annuleer
+        </a>
+        <input type="submit" class="btn btn-primary" value="Indienen"/>
+    </div>
+</form>
+
+<div class="hidden" id="primColor">@Model.SetUp.PrimColor</div>
+<div class="hidden" id="secColor" >@Model.SetUp.SecColor</div>
+
+@section Scripts {
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/task.entry.js"></script>
+}

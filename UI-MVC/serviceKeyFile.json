@@ -1,0 +1,12 @@
+﻿{
+  "type": "service_account",
+  "project_id": "pelagic-robot-301110",
+  "private_key_id": "52bc75ff0a638cd4a5a23b524a20310373fdd591",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6qq2BlGq/L1gL\nzXBRyHJwxQD6zO+b8aF3ivfopjW+DRENrmbdg2Oy4Du5fS9qqtIyR7O3n4h227KW\nHEyeEHIwm+iuZUtHoGQpWeCbs8HxiC68KXcp1A3gUhmoO8usBBO4CBwFVk3+DbJP\nrs9o5a+PQQQoQ7bjDJAGqCmyN7+zn9gpgl5vKTHBrSXdyhCxo37HiqKRYAJ4KTwy\nqs8+kWrqjkZ1XDJzcUIYkSHjtV8JrZnmhABSi5TsK/ZGMrwDJR4sSk2Lihwp1IEM\nohCj+ruLsE94btmpbWicdF0On+VfLPICzS/fUE1R1BfsZsQbsJYOsBWTmpn/Rp4S\nQcTJLsLpAgMBAAECggEAD2sptG+zTDd3k6yp1ReJhxG+vaNP52xTZLHF6Hb82XCa\n3VZv3hGMRVTgRLdibfJ436Osj0Ojh1h+V90z4ZqE1B8Ms9sKF3stdXzxteq937Aw\nAWWAwk5nFwWxDi8M6RiCcyENr3iBg1/+P+FgoHmDFtd3+xtyGoRfIS2ixBB2yo9f\nsdRoQ44tF2h0hbLh+F8nJ32L71dWfQyJd4UgFvKbLhz8SeNcrSZtDbvI3h+MJ9YP\nElsZj/1cuF2X1JHHex9zmRRocwEpLgIFpWiIQuAGIFJovWH+yVQoOWL94yiMt4FQ\n6wV+fJDK/Vs4cx2BV4JCXikBZIcs+0l4n8LRq0QwQQKBgQD6ynMXZ/WLAeK7oQbT\n4lDY69QTJtQ0DnYXBE5khpOa1tVoQypw+DNK7iST0H+jMAKfDy5nyvyaavv60rGh\n7tileUNQoVuDmYqvSAqeXzCfQLZshItni/KO3sJZp2EZu/1OzN7hu/nX4q1fTSva\nYi/XfVw8OQidko3hb6Pv2soCJwKBgQC+i0F+5Vo1voT+4Vy6Ij/BCSRdX0s3IKqD\nkg2eGruhophYMjX8OURK9Qph+RX5Cr7UnFbMNsYeDG2Di8Rg2LMvJyw+ZI6eZ2do\nfo+848x1j64LkcXdh0WPM3RhcQeQ3kw+f0ZiN80l0jsg3cAf92DAD6ebLEL4hmUR\ncqicBVIMbwKBgGcw4gZhekEGN5roePy6BHYdIxf2RB5fTOvPk8n9LcLqXskVyeLN\n3Z0ZO+euRLaKzKlR/9ApT6LiHmhoRTrSIkaEDNSicBtIFC5nQCdGF6WPZQBl0U57\n4QQ0WFe3bVa/aU0BMzxCslzIInoyMLcc636JUGhfN1JOuR5nZ1cL+U7FAoGBAJwY\nCHej+9q7UMhcZlI1bHT+wEOdpUhsAkP2iiFTVRJ82MCnoYIWh9PAGdlY7J8wJlSW\nHqT82iATnkN9ZErSOzgNpzkVt6AcpaH8zFO5ae2E3tere6SXBGzjghuxNLmA4oTw\nTwB3JiAtsTKjdpi5VxD/whZklBh0QKeifm4SDb0RAoGABQ7N3yJBS4DXH7b5/vK6\nkLO4Bjlc0eMLqSVzsG+MS0+ofEk/dHecmpYHVWJ+KmagJPHfgndqtp6ijjQBqr/2\nVfP8NboKFZIBgGU5QUfBAcKJT0yExRHVob1BHTySnftJ5u31hxf347JK3upxdDYd\nDjmNWvNO3+qfgOC63XDzQ0I=\n-----END PRIVATE KEY-----\n",
+  "client_email": "applicationaccount@pelagic-robot-301110.iam.gserviceaccount.com",
+  "client_id": "116055701012676591233",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/applicationaccount%40pelagic-robot-301110.iam.gserviceaccount.com"
+}

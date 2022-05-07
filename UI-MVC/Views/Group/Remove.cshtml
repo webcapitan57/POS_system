@@ -1,0 +1,32 @@
+﻿@model POC.BL.Domain.user.Group
+
+@{
+    ViewBag.SetupLogo = Model.Teacher.SetUp.Logo.Picture;
+    ViewBag.SetupName = Model.Teacher.SetUp.Name;
+    ViewBag.Title = Model.Name + " - Verwijderen";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+<div id="deleteGroup">
+    <p>Bent u zeker dat u de groep '@Model.Name' wil verwijderen?</p>
+
+    <form asp-action="RemoverGroupConfirmed" asp-route-groupcode="@Model.GroupCode" method="post">
+        <div>
+            <a class="btn btn-light" asp-action="Index" asp-route-id="@Model.Teacher.UserId">Annuleren</a>
+            <input type="submit" class="btn btn-danger" value="Verwijderen"/>
+        </div>
+    </form>
+</div>
+
+<div hidden id="primColor">@Model.Teacher.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.Teacher.SetUp.SecColor</div>
+
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/group.entry.js" defer></script>
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    
+
+}

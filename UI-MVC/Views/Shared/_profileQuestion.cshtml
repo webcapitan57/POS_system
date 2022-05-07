@@ -1,0 +1,30 @@
+﻿@using POC.BL.Domain.profile
+@model POC.BL.Domain.user.StudentProfileAnswer
+
+@Html.HiddenFor(modelItem => Model.AnsweredQuestion)
+@Html.HiddenFor(modelItem => Model.AnsweredQuestion.ProfileQuestionId)
+@Html.HiddenFor(modelItem => Model.AnsweredQuestion.IsRequired)
+@Html.HiddenFor(modelItem => Model.AnsweredQuestion.Description)
+@Html.HiddenFor(modelItem => Model.AnsweredQuestion.Question)
+@Html.HiddenFor(modelItem => Model.StudentProfileAnswerId)
+
+@if (Model.AnsweredQuestion is StudentMCProfileQuestion mcProfileQuestion)
+{
+    <div class="form-group">
+        <label asp-for="Value">@Model.AnsweredQuestion.Question @(mcProfileQuestion.IsRequired ? "*" : "")</label>
+        <select asp-for="Value" class="form-control"}>
+            <option value="">Kies een optie</option>
+            @foreach (var option in mcProfileQuestion.StudentProfileOptions)
+            {
+                <option value="@option.Value">@option.Value</option>
+            }
+        </select>
+    </div>
+}
+else if (Model.AnsweredQuestion is StudentProfileQuestion profileQuestion)
+{
+    <div class="form-group">
+        <label asp-for="Value">@profileQuestion.Question @(profileQuestion.IsRequired ? "*" : "")</label>
+        <input asp-for="Value" class="form-control" value="@Model.Value"/>
+    </div>
+}

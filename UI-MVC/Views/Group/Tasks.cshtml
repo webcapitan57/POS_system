@@ -1,0 +1,40 @@
+﻿@using POC.BL.Domain.task
+@model UI_MVC.Models.EditGroupTaskViewModel
+
+@{
+    ViewBag.SetupLogo = Model.CurrentGroup.Teacher.SetUp.Logo.Picture;
+    ViewBag.Title = Model.CurrentGroup.Name + " - Taken";
+    ViewBag.SetupName = Model.CurrentGroup.Teacher.SetUp.Name;
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+<div class="create-group">
+    <h2>@Model.CurrentGroup.Name</h2>
+    <p id="groupId" hidden>@Model.CurrentGroup.GroupCode</p>
+    @if (User.IsInRole("GuestTeacher"))
+
+    {
+        <div>
+            <a class="btn btn-primary " asp-action="SingleGroup" asp-controller="Group" asp-route-groupCode="@Model.CurrentGroup.GroupCode">Klaar</a>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a class="btn btn-primary" asp-action="Index" asp-controller="Group" asp-route-id="@Model.CurrentGroup.Teacher.UserId">Klaar</a>
+        </div>
+    }
+</div>
+
+<partial name="_TaskAddOrRemoveToGroup" model="@Model"/>
+
+<div hidden id="primColor">@Model.CurrentGroup.Teacher.SetUp.PrimColor</div>
+<div hidden id="secColor">@Model.CurrentGroup.Teacher.SetUp.SecColor</div>
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/addTaskToGroup.entry.js" defer></script>
+    <script type="module" src="~/dist/group.entry.js" defer></script>
+}

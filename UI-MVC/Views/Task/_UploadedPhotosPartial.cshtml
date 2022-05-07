@@ -1,0 +1,18 @@
+﻿@model POC.BL.Domain.delivery.TaskDelivery
+
+<p id="taskDeliveryId" hidden>@Model.TaskDeliveryId</p>
+<p hidden id="studentId">
+    @{ System.Diagnostics.Debug.Assert(Model.Student != null, "Model.Student != null"); }
+    @Model.Student.StudentId
+</p>
+
+<input type="file" id="file" accept="image/*" multiple hidden>
+<label for="file" type="image" class="add-photo-button" data-toggle="tooltip" data-placement="bottom" title="Upload foto">
+    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+    </svg>
+</label>
+
+<div id="sentPhotosDiv">
+
+</div>

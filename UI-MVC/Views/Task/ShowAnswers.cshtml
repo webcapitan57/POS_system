@@ -1,0 +1,87 @@
+﻿@using POC.BL.Domain.delivery
+@model UI_MVC.Models.CreateAnswerViewModel
+
+@{
+    System.Diagnostics.Debug.Assert(Model.SetUp.Logo != null, "Model.SetUp.Logo != null");
+
+    ViewBag.SetupLogo = Model.SetUp.Logo.Picture;
+    ViewBag.SetupName = Model.SetUp.Name;
+    ViewBag.Title = "title";
+    Layout = "_LayoutStudent";
+
+
+}
+
+<div id="photoQuestionId" hidden>@Model.PhotoQuestion.PhotoQuestionId</div>
+<div id="taskId" hidden>@Model.PhotoQuestion.Task.TaskId</div>
+<div hidden id="primColor">@Model.SetUp.PrimColor</div>
+<div hidden id="secColor">@Model.SetUp.SecColor</div>
+
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+
+<!-- Upload photo button and uploaded photo's -->
+<div id="task-photos">
+    <partial name="_UploadedPhotosPartial" model="@Model.TaskDelivery"/>
+</div>
+
+<!-- Tips bubble (Standard display none) -->
+<div style="display: none;" id="tips">
+    <p>@Model.PhotoQuestion.Tips</p>
+</div>
+
+<!-- Question with tips button -->
+<div class="shadow-sm question-with-hint-btn">
+    @if (!string.IsNullOrEmpty(Model.PhotoQuestion.Tips))
+    {
+        <button id="toggleTips" class="btn-hint" data-toggle="tooltip" data-placement="bottom" title="Hint">
+            <svg id="hint-bulb" xmlns="http://www.w3.org/2000/svg" class="bi bi-lightbulb" viewBox="0 0 16 16">
+                <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z"/>
+            </svg>
+        </button>
+    }
+    <div class="task-title">
+        <a id="questionRef" asp-controller="Task" asp-action="ShowQuestions" asp-route-deliveryId="@Model.TaskDelivery.TaskDeliveryId"
+           asp-route-setupId="@Model.SetUp.SetUpId"
+           data-toggle="tooltip" data-placement="bottom" title="Terug naar overzicht fotovragen">
+            <svg xmlns="http://www.w3.org/2000/svg" height="80" width="80" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+            </svg>
+            <p>
+                @Model.PhotoQuestion.Question
+            </p>
+
+        </a>
+    </div>
+</div>
+
+<!-- Assigned Photo Bar (Filled with js)-->
+<div id="AssignedPhotosDiv" style="display: none"></div>
+
+<!-- Selected Answer with side questions (Filled with js) -->
+<div id="CurrentAnswer" style="display: none" class="task-side-questions"></div>
+
+<!-- Locations -->
+@if (Model.PhotoQuestion.Locations.Count > 0)
+{
+    <div id="map">
+        @if (Model.PhotoQuestion.Locations.Count == 1)
+        {
+            <b>Neem zeker een kijkje bij deze locatie!</b>
+        }
+        else
+        {
+            <b>Neem zeker een kijkje bij deze locaties!</b>
+        }
+
+        <div id="mapCanvas" class="map"></div>
+    </div>
+}
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/showPhotos.entry.js" defer></script>
+    <script type="module" src="~/dist/showAnswers.entry.js" defer></script>
+    <script type="module" src="~/dist/locationDelivery.entry.js" defer></script>
+    <script type="module" src="~/dist/task.entry.js"></script>
+}

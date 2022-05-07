@@ -1,0 +1,124 @@
+@page
+@model LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+<div id="login-div">
+    <div id="email-login" class="login-wide">
+        @if (Model.SetUpCode != "ARCHIVED")
+        {
+            <form id="account" method="post" class="text-center" asp-route-setupCode="@Model.SetUpCode">
+                @if (string.IsNullOrEmpty(Model.SetUpCode))
+                {
+                    <h1>Admin login</h1>
+                }
+
+               
+                <h1>Welkom!</h1>
+                <div class="form-group">
+                    <input asp-for="Input.Username" class="form-control" placeholder="Username">
+                    <span asp-validation-for="Input.Username" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Input.Password" type="password" class="form-control" placeholder="Wachtwoord">
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div id="remember-forgot">
+                    <div class="form-check">
+                        <input asp-for="Input.RememberMe" type="checkbox" class="form-check-input">
+                        <label asp-for="Input.RememberMe" class="form-check-label">Onthoud gegevens</label>
+                    </div>
+                    <a id="forgot-password" asp-page="./ForgotPassword">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-unlock" viewBox="0 0 16 16">
+                            <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+                        </svg>
+                        Wachtwoord vergeten?
+                    </a>
+                </div>
+                <div>
+                    <p>Nog geen account? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" asp-route-setupCode="@Model.SetUpCode">Nu aanmaken!</a></p>
+                </div>
+                <div>
+                    <!--Facebook & Google icons-->
+                </div>
+                <input class="btn btn-primary" type="submit" value="Inloggen">
+            </form>
+            <div class="text-center">
+                <h3>Inloggen</h3>
+                <p>Klik hier om in te loggen op het platform!</p>
+                <button id="show-email" class="btn btn-secondary">Inloggen</button>
+            </div>
+        }
+        else
+        {
+            <h1>Het spijt ons te melden dat deze setup momenteel niet actief is</h1>
+        }
+    </div>
+    @if (!string.IsNullOrEmpty(Model.SetUpCode) || Model.SetUpCode == "ARCHIVED")
+    {
+        <div id="group-code-login" class="login-narrow">
+            <form class="text-center" id="join-login">
+                <h1>Deelnemen</h1>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Groepscode" id="group-code-value">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Wachtwoord" id="group-pass-value">
+                </div>
+                <div class="form-group">
+                    <a id="new-group" href="#">Nieuwe groep aanmaken</a>
+                </div>
+                <input id="group-login-submit" class="btn btn-primary" type="button" value="Deelnemen">
+            </form>
+            <div class="text-center" id="group-text-div">
+                <h3>Deelnemen</h3>
+                <p>Snel deelnemen aan een groep? Dat kan ook!</p>
+                <button id="show-group-code" class="btn btn-secondary">Doorgaan als gast</button>
+            </div>
+        </div>
+    }
+
+</div>
+@if (!string.IsNullOrEmpty(Model.SetUpCode) || Model.SetUpCode == "ARCHIVED")
+{
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to log in.</h4>
+            <hr/>
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" asp-route-setupCode="@Model.SetUpCode" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+}
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+    <script src="~/dist/switchLogin.entry.js" defer></script>
+}

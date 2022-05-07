@@ -1,0 +1,142 @@
+﻿@using POC.BL.Domain.delivery
+@model UI_MVC.Models.ShowQuestionsViewModel
+
+@{
+    System.Diagnostics.Debug.Assert(Model.SetUp.Logo != null, "Model.SetUp.Logo != null");
+    
+    ViewBag.SetupLogo = Model.SetUp.Logo.Picture;
+    ViewBag.Title = "Vragen";
+    ViewBag.SetupName = Model.SetUp.Name;
+    Layout = "_LayoutStudent";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+
+<!-- Upload photo button and uploaded photo's -->
+<div id="task-photos">
+    <partial name="_UploadedPhotosPartial" model="@Model.Delivery"/>
+</div>
+
+@switch (@Model.Delivery)
+{
+    case SetTaskDelivery setTaskDelivery:
+
+        <div class="task-title">
+            <a asp-controller="Task" asp-action="Show" asp-route-groupCode="@setTaskDelivery.Group.GroupCode" asp-route-studentId="@setTaskDelivery.Student.StudentId"
+               data-toggle="tooltip" data-placement="bottom" title="Terug naar overzicht taken">
+                <svg xmlns="http://www.w3.org/2000/svg" height="80" width="80" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                <p>
+                    @setTaskDelivery.SetTask.Title
+                </p>
+            </a>
+        </div>
+
+        <div class="question-info">
+            @setTaskDelivery.SetTask.Info
+        </div>
+
+        @foreach (var photoQuestion in setTaskDelivery.SetTask.Questions)
+        {
+            @if (photoQuestion.Answers.Any(a => a.TaskDelivery.TaskDeliveryId == setTaskDelivery.TaskDeliveryId))
+            {
+                <div id="lf-element" class="task-item task-item-complete">
+                    <a asp-controller="Task" asp-action="ShowAnswers" asp-route-deliveryId="@Model.Delivery.TaskDeliveryId" asp-route-photoQuestionId="@photoQuestion.PhotoQuestionId"
+                       asp-route-setUpId="@Model.SetUp.SetUpId"
+                       data-toggle="tooltip" data-placement="bottom" title="Naar deze fotovraag gaan">
+                        <p>
+                            @photoQuestion.Question
+                        </p>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                          <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div id="lf-element" class="task-item task-item-incomplete">
+                    <a asp-controller="Task" asp-action="ShowAnswers" asp-route-deliveryId="@Model.Delivery.TaskDeliveryId" asp-route-photoQuestionId="@photoQuestion.PhotoQuestionId"
+                       asp-route-setUpId="@Model.SetUp.SetUpId"
+                       data-toggle="tooltip" data-placement="bottom" title="Naar deze fotovraag gaan">
+                        <p>
+                            @photoQuestion.Question
+                        </p>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+
+                    </a>
+                </div>
+            }
+        }
+        break;
+
+    case TeacherTaskDelivery teacherTaskDelivery:
+        <div class="task-title">
+
+            <a asp-controller="Task" asp-action="Show" asp-route-groupCode="@teacherTaskDelivery.Group.GroupCode" asp-route-studentId="@teacherTaskDelivery.Student.StudentId"
+               data-toggle="tooltip" data-placement="bottom" title="Terug naar overzicht taken">
+                <svg xmlns="http://www.w3.org/2000/svg" height="80" width="80" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                <p>
+                    @teacherTaskDelivery.TeacherTask.Title
+                </p>
+            </a>
+        </div>
+
+        <div id="question-info">
+            @teacherTaskDelivery.TeacherTask.Info
+        </div>
+
+        @foreach (var photoQuestion in teacherTaskDelivery.TeacherTask.Questions)
+        {
+            @if (photoQuestion.Answers.Any(a => a.TaskDelivery.TaskDeliveryId == teacherTaskDelivery.TaskDeliveryId))
+            {
+                <div id="lf-element" class="task-item task-item-complete lf-element-prim">
+                    <a asp-controller="Task" asp-action="ShowAnswers" asp-route-deliveryId="@Model.Delivery.TaskDeliveryId" asp-route-photoQuestionId="@photoQuestion.PhotoQuestionId"
+                       asp-route-setUpId="@Model.SetUp.SetUpId"
+                       data-toggle="tooltip" data-placement="bottom" title="Naar deze fotovraag gaan">
+                        <p>
+                            @photoQuestion.Question
+                        </p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                          <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div id="lf-element" class="task-item task-item-incomplete">
+                    <a asp-controller="Task" asp-action="ShowAnswers" asp-route-deliveryId="@Model.Delivery.TaskDeliveryId" asp-route-photoQuestionId="@photoQuestion.PhotoQuestionId"
+                       asp-route-setUpId="@Model.SetUp.SetUpId"
+                       data-toggle="tooltip" data-placement="bottom" title="Naar deze fotovraag gaan">
+                        <p>
+                            @photoQuestion.Question
+                        </p>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+
+                    </a>
+                </div>
+            }
+        }
+        break;
+}
+<div hidden id="primColor">@Model.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.SetUp.SecColor</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/indexGroup.entry.js" defer></script>
+    <script type="module" src="~/dist/uploadedPhotos.entry.js" defer></script>
+    <script type="module" src="~/dist/task.entry.js"></script>
+}

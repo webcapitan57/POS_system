@@ -1,0 +1,6 @@
+﻿@model IList<POC.BL.Domain.delivery.Photo>
+
+@for (var i = 0; i < Model.Count; i++)
+{
+    <img src="@(Model[i].Picture)" class="rounded-circle" height="75" width="75" asp-append-version="true" alt=""/>
+}

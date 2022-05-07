@@ -1,0 +1,117 @@
+﻿@using POC.BL.Domain.user
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<UserAccount> SignInManager
+@inject UserManager<UserAccount> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@(ViewData["SetupName"] ?? "VRT Edubox") - @ViewData["Title"]</title>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <link rel="stylesheet" href="~/dist/site.css" type="text/css"/>
+    <link rel="stylesheet" href="~/dist/identity.css" type="text/css"/>
+    <link rel="stylesheet" href="~/dist/setups.css" type="text/css"/>
+    <link rel="stylesheet" href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")" type="text/css">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            @if (ViewBag.SetupLogo == null || SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+            {
+                <img src="~/resources/edubox.png" alt="EduBox" class="navbar-logo">
+            }
+            else
+            {
+                <img src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@ViewBag.SetupLogo" alt="Setup logo" class="navbar-logo">
+            }
+
+            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Teacher"))
+            {
+                <a class="navbar-brand" asp-area="" asp-controller="Group" asp-action="Index">@(ViewData["SetupName"] ?? "VRT Edubox")</a>
+            }
+            else
+            {
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <a class="navbar-brand" asp-area="" asp-controller="Setup" asp-action="Index">VRT Edubox</a>
+                }
+            }
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+           <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial"/>
+                <ul class="navbar-nav flex-grow-1">
+                    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="SetUp" asp-action="Index">SetUps</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="AdminCreate">Creëer admin</a>
+                        </li>
+                    }
+                    else if (User.IsInRole("Teacher"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Group" asp-action="Index">Groups</a>
+                        </li>
+                    }
+                    else if (User.IsInRole("GuestTeacher"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Group" asp-action="SingleGroup" asp-route-groupCode="FindForMePls">Group</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<div id="page-container" class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+</div>
+<footer class="row footer">
+    <div class="upper-footer">
+        <div class="container">
+            <div>
+                <img src="~/resources/EduBox.jpg" alt="EduBox" class="edubox-logo footer-logo">
+                <img src="~/resources/TreeCompany.png" alt="EduBox" class="footer-logo">
+            </div>
+            <div class="social-media-buttons">
+                <a href="https://nl.linkedin.com/company/vrt-nws" class="fa fa-linkedin"></a>
+                <a href="https://www.instagram.com/eduboxvrtnws/" class="fa fa-instagram"></a>
+                <a href="https://twitter.com/VRT" class="fa fa-twitter"></a>
+                <a href="https://www.facebook.com/eduboxvrt" class="fa fa-facebook"></a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="lower-footer">
+        <div class="container">
+            <p class="copyright">&copy; Copyright: VRT EduBox</p>
+            <a class="privacy" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a>
+        </div>
+    </div>
+</footer>
+
+@section Scripts{
+    <script type="module" src="~/dist/site.entry.js" defer></script>
+    <script type="module" src="~/dist/bootstrap_js.entry.js" defer></script>
+    <script type="module" src="~/dist/validation.entry.js" defer></script>
+    <script type="module" src="~/dist/identity.entry.js" defer></script>
+    <script type="module" src="~/dist/setups.entry.js" defer></script>
+}
+
+</body>
+</html>

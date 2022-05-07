@@ -1,0 +1,12 @@
+﻿@model POC.BL.Domain.profile.StudentProfileOption
+
+<div id="studentOption_@Model.ProfileOptionId">
+    <div class="setup-edit-options">
+        <label>Optie: </label>
+        <input id="Value_@Model.ProfileOptionId" asp-for="Value" type="text" placeholder="Optie" class="form-control"/>
+         <span id="OptionValueSpan_@Model.ProfileOptionId"></span>
+            <button class="btn" id="removeStudentOption_@Model.StudentMcProfileQuestion.ProfileQuestionId _@Model.ProfileOptionId">
+            <img src="~/resources/Icons/cross.svg" alt="verwijder" class="sm-cross">
+        </button>
+    </div>
+</div>

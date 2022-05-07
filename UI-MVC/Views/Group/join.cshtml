@@ -1,0 +1,48 @@
+﻿@using Google.Api
+@model UI_MVC.Models.JoinGroupViewModel
+
+@{
+    ViewBag.Title = "Join";
+    Layout = "_LayoutStudent";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+
+
+<form asp-controller="Group" asp-action="Join" method="post">
+    
+    @Html.HiddenFor(modelItem => modelItem.ValidationExceptions)
+    
+    <section class="row">
+        <div id="group-join-img" class="col">
+            <img src="~/resources/EBstart.PNG" alt="EduBox">
+        </div>
+        <div id="group-join-general" class=" col">
+            <div id="join-help">
+                <a asp-controller="Group" asp-action="Help" data-toggle="tooltip" data-placement="bottom" title="Help">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-info-circle-fill " viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div id="group-login-flex" class="form-group text-center hoogte">
+                <h2 >Welkom! </h2>
+                <input asp-for="GroupCode" class="form-control join-input" placeholder="Groepscode"/>
+                <span class="text-danger join-group">
+                    @foreach (var e in Model.ValidationExceptions)
+                    {
+                        @e.Message
+                        ;
+                    }
+                </span>
+                <input type="submit" class="btn btn-success join-group" value="Let's get started">
+            </div>
+        </div>
+
+    </section>
+</form>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/group.entry.js" defer></script>
+}

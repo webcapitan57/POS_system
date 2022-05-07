@@ -1,0 +1,380 @@
+﻿/*SHARED CONTENT*/
+
+/*Variable colors*/
+:root {
+    /*Standard Edubox colors*/
+    --edubox-green: #57BE62;
+    --edubox-blue: #011435;
+
+    /*Theme colors*/
+    --primary-color: var(--edubox-green);
+    --secondary-color: var(--edubox-blue);
+
+    --link-color: #0366d6
+}
+
+/*Essentials*/
+a {
+    color: var(--secondary-color)
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+html {
+    font-size: 14px;
+}
+
+span{
+    color: red;
+}
+/* Page minimum height (for footer) */
+html {
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+    height: 100%;
+}
+
+#page-container {
+    min-height: calc(100vh - 190px);
+}
+
+/* Visibilities */
+.invisible {
+    visibility: hidden;
+}
+
+.gone {
+    visibility: hidden;
+    height: 1px;
+    width: 1px;
+    font-size: 1px;
+    right: 9999px;
+    color: transparent;
+}
+
+/*navigation bar*/
+.navbar-logo {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    margin-left: 5px;
+}
+
+/*Footer*/
+.footer {
+    bottom: 0;
+    margin: 0 !important;
+    width: 100%;
+}
+
+.upper-footer {
+    border-top: 1px solid #e5e5e5;
+    background-color: white;
+    width: 100%;
+    height: 60px;
+}
+
+.upper-footer > div {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.footer-logo {
+    height: 40px;
+    margin: auto;
+}
+
+.edubox-logo {
+    border-radius: 50%;
+    margin-left: 0;
+}
+
+.social-media-buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.lower-footer {
+    width: 100%;
+    background-color: var(--secondary-color);
+}
+
+.copyright, .privacy {
+    vertical-align: center;
+    color: white;
+    display: inline;
+    padding: 10px 0;
+}
+
+.copyright {
+    float: left;
+    margin: 0;
+}
+
+.privacy:link, .privacy:visited, .privacy:active {
+    text-decoration: underline;
+    float: right;
+}
+
+/*Social media in footer*/
+.fa {
+    padding: 4px;
+    font-size: 10px;
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+
+}
+
+.fa:hover {
+    opacity: 0.7;
+    text-decoration: none;
+}
+
+.fa-facebook {
+    background: #3B5998;
+}
+
+.fa-twitter {
+    background: #55ACEE;
+}
+
+.fa-linkedin {
+    background: #007bb5;
+}
+
+.fa-instagram {
+    background: linear-gradient(#405DE6, #5851DB 0%, #833AB4 25%, #C13584 50%, #E1306C 75%, #F77737 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
+}
+
+
+/*Shared content on wider screens*/
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (min-width: 576px) {
+
+    #page-container {
+        min-height: calc(100vh - 190px);
+    }
+
+    .footer-logo {
+        height: 40px;
+        margin: auto;
+    }
+
+    .fa {
+        padding: 12px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    html {
+        font-size: 1em;
+    }
+
+    #page-container {
+        min-height: calc(100vh - 197px);
+    }
+
+    .footer-logo {
+        height: 45px;
+        margin: auto;
+    }
+
+    .fa {
+        padding: 10px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    html {
+        font-size: 1em;
+    }
+
+    #page-container {
+        min-height: calc(100vh - 218px);
+    }
+
+    .container {
+        max-width: 1330px;
+    }
+
+
+    .footer-logo {
+        height: 50px;
+    }
+
+    .upper-footer {
+        height: 80px;
+    }
+
+    .fa {
+        padding: 10px;
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+    html {
+        font-size: 1em;
+    }
+
+    #page-container {
+        min-height: calc(100vh - 237px);
+    }
+
+    .container {
+        max-width: 1330px;
+    }
+
+
+    .footer-logo {
+        height: 55px;
+    }
+
+    .upper-footer {
+        height: 100px;
+    }
+
+    .fa {
+        width: 45px;
+        height: 45px;
+        padding: 14px;
+    }
+}
+
+@media (min-width: 2000px) {
+    html {
+        font-size: 26px;
+    }
+
+    #page-container {
+        min-height: calc(100vh - 277px);
+    }
+
+    .container {
+        max-width: 1330px;
+    }
+
+    .fa {
+        width: 50px;
+        height: 50px;
+        padding: 12px;
+    }
+
+    .footer-logo {
+        height: 80px;
+    }
+
+    .upper-footer {
+        height: 100px;
+    }
+}
+
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--edubox-green)!important;
+    color: white ;
+    border: 0;
+}
+
+.btn-primary:hover .btn-primary:focus{
+    background-color: var(--edubox-green) !important;
+    opacity: 0.7%;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: var(--secondary-color);
+    opacity: 90%;
+}
+
+.btn-round {
+    border-radius: 50%;
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.action-buttons {
+    text-align: center;
+}
+
+.action-buttons > a {
+    text-decoration: none;
+}
+
+.btn-center {
+    width: 100%;
+    text-align: center;
+}
+
+.svg-a-primary {
+    color: var(--primary-color) !important;
+}
+
+.svg-a-primary:hover {
+    color: var(--primary-color) !important;
+    opacity: 90%;
+}
+
+.svg-a-secondary {
+    color: var(--secondary-color);
+}
+
+.svg-a-secondary:hover {
+    color: var(--secondary-color);
+    opacity: 90%;
+}
+
+/*#primColor, #secColor {*/
+/*    display: none;*/
+/*}*/
+
+
+

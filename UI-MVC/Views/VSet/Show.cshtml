@@ -1,0 +1,348 @@
+﻿@using POC.BL.Domain.delivery
+@using POC.BL.Domain.user
+@model UI_MVC.Models.VSet.VSetViewModel
+
+@{
+    ViewBag.SetupName = Model.Setup == null ? Model.Group.Teacher.SetUp.Name : Model.Setup.Name;
+    ViewBag.SetupLogo = Model.Setup == null ? Model.Group.Teacher.SetUp.Logo.Picture : Model.Setup.Logo.Picture;
+    ViewBag.Title = "Vlaamse Set";
+    Layout = "_Layout";
+
+    <link rel="stylesheet" href="@Url.Content("~/dist/moderate.css")" type="text/css"/>
+}
+
+<div id="title-with-group-btn">
+    <h2>Vlaamse Set</h2>
+    @if (Model.Group != null)
+    {
+        <a asp-action="ShowDeliveriesGallery" asp-controller="Moderate" asp-route-groupCode="@Model.Group.GroupCode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-collection" viewBox="0 0 16 16">
+                <path d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-11zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1h-7zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6v7zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13z"/>
+            </svg>
+        </a>
+    }
+</div>
+
+<div id="teacherId" hidden>@Model.User.UserId</div>
+<div id="currentTaskId" hidden>@Model.CurrentTaskId</div>
+
+<section id="section-gallery">
+    <div id="filters" class="vset-filters">
+        <div class="vset-profile-filters">
+            @foreach (var group in Model.Filters.Select(f => f.Description).Distinct())
+            {
+                <div class="filter">
+                    <select class="form-control filter-select" id="@group">
+                        <option value="">@group</option>
+                        @foreach (var filter in Model.Filters.Where(f => f.Description == group).Select(f => f.Value).Distinct())
+                        {
+                            <option value="@filter">@filter</option>
+                        }
+                    </select>
+                </div>
+            }
+        </div>
+        <div>
+            @if (Model.User.FilterProfiles.Count != 0)
+            {
+                <select class="form-control col-7" id="filter-profiles">
+                    <option value="">Laad filterprofiel</option>
+                    @foreach (var filterProfile in Model.User.FilterProfiles)
+                    {
+                        <option value="@filterProfile.FilterProfileId">@filterProfile.ProfileName</option>
+                    }
+                </select>
+            }
+
+            @if (Model.SetTasks.Count == 1)
+            {
+                <select id="filter-task" class="form-control" disabled>
+                    @foreach (var task in Model.SetTasks)
+                    {
+                        <option value="@task.TaskId">@task.Title</option>
+                    }
+                </select>
+            }
+            else
+            {
+                <div>
+                    <select id="filter-task" class="form-control">
+                        @foreach (var task in Model.SetTasks)
+                        {
+                            <option value="@task.TaskId">@task.Title</option>
+                        }
+                    </select>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <ul id="gallery">
+        @foreach (var answer in @Model.Answers)
+        {
+            @if (((SetTaskDelivery) answer.TaskDelivery).SetTask.TaskId == Model.CurrentTaskId)
+            {
+                <li id="@(((SetTaskDelivery) answer.TaskDelivery).SetTask.TaskId)" class="vset-answer">
+                    <img id="gallery-image_@answer.AnswerId" src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@answer.AssignedPhoto.Picture" alt="" class="gallery-image">
+                </li>
+            }
+            else
+            {
+                <li id="@(((SetTaskDelivery) answer.TaskDelivery).SetTask.TaskId)" style="display: none" class="vset-answer">
+                    <img id="gallery-image_@answer.AnswerId" src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@answer.AssignedPhoto.Picture" alt="" class="gallery-image">
+                </li>
+            }
+        }
+    </ul>
+    <div id="page-numbers">
+        @foreach (var setTask in Model.SetTasks)
+        {
+            @if (setTask.TaskId == Model.CurrentTaskId)
+            {
+                <div id="@setTask.TaskId" class="vset-nav-buttons">
+
+                    @if (Model.Page != 1)
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Vorige pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Vorige pagina</a>
+                        }
+                    }
+                    else
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Vorige pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Vorige pagina</a>
+                        }
+                    }
+
+                    <p>@Model.Page</p>
+
+                    @if (!Model.IsLastPage)
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Volgende pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Volgende pagina</a>
+                        }
+                    }
+                    else
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Volgende pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Volgende pagina</a>
+                        }
+                    }
+
+                </div>
+            }
+            else
+            {
+                <div id="@setTask.TaskId" class="vset-nav-buttons" style="display: none">
+
+                    @if (Model.Page != 1)
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Vorige pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Vorige pagina</a>
+                        }
+                    }
+                    else
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Vorige pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page - 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Vorige pagina</a>
+                        }
+                    }
+
+                    <p>@Model.Page</p>
+
+                    @if (!Model.IsLastPage)
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Volgende pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary">Volgende pagina</a>
+                        }
+                    }
+                    else
+                    {
+                        @if (Model.User is Teacher)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-groupCode="@Model.Group.GroupCode" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Volgende pagina</a>
+                        }
+                        else if (Model.User is Admin)
+                        {
+                            <a asp-action="Show" asp-route-page="@(Model.Page + 1)" asp-route-setupId="@Model.Setup.SetUpId" asp-route-currentTask="@setTask.TaskId" class="btn btn-primary" style="visibility: hidden">Volgende pagina</a>
+                        }
+                    }
+
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<section id="section-answers">
+    @foreach (var answer in @Model.Answers)
+    {
+        <div id="answerDetails_@answer.AnswerId" style="display: none" class="gallery-side-answers">
+            <button class="btn btn-secondary btn-gallery-back">Terug</button>
+            <h5>@answer.AnsweredQuestion.Question</h5>
+            <div>
+                <img src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@answer.AssignedPhoto.Picture" alt="" class="side-answers-img">
+                <div id="action-buttons">
+                    @if (!Model.ReportedAnswers.Contains(answer))
+                    {
+                        @if (Model.LikedAnswers.Contains(answer))
+                        {
+                            <div id="gallery-like-buttons_@answer.AnswerId" class="gallery-like-buttons gallery-liked">
+                                <div class="gallery-btn-like">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart" viewBox="0 0 16 16">
+                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                    </svg>
+                                </div>
+
+                                <div class="gallery-btn-unlike">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="gallery-like-buttons_@answer.AnswerId" class="gallery-like-buttons">
+                                <div class="gallery-btn-like">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart" viewBox="0 0 16 16">
+                                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                    </svg>
+                                </div>
+
+                                <div class="gallery-btn-unlike">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                    @if (Model.ReportedAnswers.Contains(answer))
+                    {
+                        <div class="vset-report-buttons vset-reported">
+                            <div id="@answer.AnswerId" class="btn-report">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-shield-x" viewBox="0 0 16 16">
+                                    <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                                    <path d="M6.146 5.146a.5.5 0 0 1 .708 0L8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </div>
+                            <div class="btn-reported">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-shield-fill-x" viewBox="0 0 16 16">
+                                    <path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zM6.854 5.146 8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 1 1 .708-.708z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="vset-report-buttons">
+                            <div id="@answer.AnswerId" class="btn-report">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-shield-x" viewBox="0 0 16 16">
+                                    <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                                    <path d="M6.146 5.146a.5.5 0 0 1 .708 0L8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 0 1 0-.708z"/>
+                                </svg>
+                            </div>
+                            <div class="btn-reported">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-shield-fill-x" viewBox="0 0 16 16">
+                                    <path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zM6.854 5.146 8 6.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 7l1.147 1.146a.5.5 0 0 1-.708.708L8 7.707 6.854 8.854a.5.5 0 1 1-.708-.708L7.293 7 6.146 5.854a.5.5 0 1 1 .708-.708z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+            <div id="moderate-answer-tags">
+                <h6>Tags</h6>
+                <div id="tags_@answer.AnswerId" class="moderate-tags">
+                    @foreach (var tag in @answer.TaskDelivery.Tags)
+                    {
+                        <div class="moderate-profile-tag">
+                            @(tag.Description + ":" + tag.Value)
+                        </div>
+                    }
+
+                    @foreach (var customTag in @answer.CustomTags)
+                    {
+                        <div id="@customTag.Value" class="moderate-custom-tag">
+                            @customTag.Value
+                        </div>
+                    }
+
+                </div>
+            </div>
+            <div>
+
+                <h6>Deelvragen</h6>
+                @foreach (var sideAnswer in answer.SideAnswers)
+                {
+                    <div class="form-group col-6">
+                        <label>@sideAnswer.AnsweredQuestion.Question</label>
+                        <input class="form-control" disabled value="@sideAnswer.GivenAnswer">
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
+
+
+<div hidden id="primColor">@(Model.Setup == null ? Model.Group.Teacher.SetUp.PrimColor : Model.Setup.PrimColor)</div>
+<div hidden id="secColor">@(Model.Setup == null ? Model.Group.Teacher.SetUp.SecColor : Model.Setup.SecColor)</div>
+
+
+@section Scripts{
+
+    <script type="module" src="~/dist/selectVset.entry.js" defer></script>
+    <script type="module" src="~/dist/reportVset.entry.js" defer></script>
+    <script type="module" src="~/dist/filterTaskVset.entry.js" defer></script>
+    <script type="module" src="~/dist/filterProfilesVset.entry.js" defer></script>
+
+    <!--Flemish set is based on gallery view-->
+    <script type="module" src="~/dist/filterGallery.entry.js" defer></script>
+    <script type="module" src="~/dist/likeGallery.entry.js" defer></script>
+
+    <script type="module" src="~/dist/moderate.entry.js"></script>
+
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+}

@@ -1,0 +1,83 @@
+﻿@model UI_MVC.Models.AdminInputModel
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css" xmlns="" xmlns=""/>
+<link rel="stylesheet" href="@Url.Content("~/dist/admin.css")" type="text/css" xmlns="" xmlns=""/>
+
+<p id="user_id" hidden>@Model.UserId</p>
+<form method="post" asp-controller="Admin" asp-action="Create">
+    <input asp-for="UserId" hidden>
+    <div id="admin-create-head" class="col-6">
+    <h2>Admin creëren</h2>
+    <button type="submit" class="btn btn-secondary">Admin aanmaken</button>
+    </div>
+    <h5>Profiel gegevens</h5>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" placeholder="email"/>
+            @if (Model.Email != null)
+            {
+                <span class="text-danger" asp-validation-for="Email">Er is all een account met dit email adress</span>
+            }
+            else
+            {
+                <span class="text-danger" asp-validation-for="Email"></span>
+            }
+        </div>
+    </div>
+
+</form>
+<br>
+<div class="row">
+    <div id="tables-set" class="col-md-6">
+        <label>Setups</label>
+
+        @if (Model.SetUps.Count != 0)
+        {
+            <table id="teacherTasks" class="table">
+                <thead class="thead">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var setup in Model.SetUps)
+                {
+                    <tr class="">
+                        <th scope="row">@setup.SetUpId</th>
+                        <td>@setup.Name</td>
+                        <td>
+                            <a class="btn-add-setup">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div>
+                <i>Geen setup om aan te binden.</i>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/addSetupToAdmin.entry.js" defer></script>
+}

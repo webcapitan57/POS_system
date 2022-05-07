@@ -1,0 +1,63 @@
+﻿@model UI_MVC.Models.AdminLinkerModel
+
+@{
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/setups.css")" type="text/css"/>
+<div id="setTasksDiv">
+    <p id="setup_id" hidden>@Model.SetUpId</p>
+    <div id="setup-edit-add-task">
+        <h3 class="">Admins </h3>
+    </div>
+    @if (Model.LinkedAdmins.Count + Model.UnlinkedAdmins.Count != 0)
+    {
+        <table id="teacherTasks" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">User</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var admin in Model.LinkedAdmins)
+            {
+                <tr class="bg-primary">
+                    <th scope="row">@admin.UserId</th>
+                    <td>@admin.UserAccount.UserName</td>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                    </td>
+                </tr>
+            }
+            @foreach (var admin in Model.UnlinkedAdmins)
+            {
+                <tr class="">
+                    <th scope="row">@admin.UserId</th>
+                    <td>@admin.UserAccount.UserName</td>
+                    <td>
+                        <a class="btn-add-setup">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>
+            <i>Er zijn geen admins die een setup met jouw gemeen hebben.</i>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/addAdminToSetup.entry.js" defer></script>
+}

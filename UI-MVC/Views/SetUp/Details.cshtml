@@ -1,0 +1,63 @@
+﻿@model UI_MVC.Models.SetupDetailsModel
+
+@{
+    ViewBag.Title = "Set-Up";
+    Layout = "_Layout";
+}
+<p class="text-hide" id="setUpId">@Model.SetUp.SetUpId</p>
+<div class="setup-details-title-link">
+    <h2>Set-Up</h2>
+    <div>
+        <a class="btn btn-light" asp-controller="Admin" asp-action="ModerateTeachers">
+            Overzicht Leerkrachten
+        </a>
+    </div>
+    <div class="link-copy-btn">
+        <label id="setup-details-link-label">Link voor Leerkrachten:</label>
+        <input id="loginUrl" readonly value="@Model.LoginUrl" class="join-input form-control"/>
+        <button class="btn btn-primary setup-details-clipboard" id="saveUrl" data-toggle="tooltip" data-placement="bottom" title="link kopiëren">
+            <img id="unClipped" src="/resources/Icons/clipboard-plus.svg" alt="clipboard">
+        </button>
+    </div>
+</div>
+<div>
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Aangemaakt op</th>
+            <th scope="col">Status</th>
+            <th scope="col">Algemene text</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">@Model.SetUp.SetUpId</th>
+            <td>@Model.SetUp.Name</td>
+            <td>@Model.SetUp.CreationDate.ToShortDateString()</td>
+            <td>
+                @if (Model.SetUp.Archived)
+                {
+                    <p>Gearchiveerd</p>
+                }
+                else
+                {
+                    <p>Actief</p>
+                }
+            </td>
+            <td>@Model.SetUp.GeneralText</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <partial name="_SetUpUsage" for="@Model.SetUp"/>
+
+
+</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/detailsSetUp.entry.js" defer></script>
+
+}

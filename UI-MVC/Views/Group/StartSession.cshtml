@@ -1,0 +1,30 @@
+﻿@model POC.BL.Domain.user.Group
+
+@{
+    ViewBag.SetupName = Model.Teacher.SetUp.Name;
+    ViewBag.SetupLogo = Model.Teacher.SetUp.Logo.Picture;
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+<h2 class="text-center">@Model.Name</h2>
+<h4 class="text-center">Groepscode: @Model.GroupCode</h4>
+
+<div class="domain-link-div">
+    <label class="text-center">Je kan tot de groep bijtreden door naar <a href="https://driesdehouwer.xyz">https://driesdehouwer.xyz</a> te surfen en daar de bovenstaande code in te geven.</label>
+</div>
+
+<div class="qr-div">
+    <label>Scan de QR code via de app</label>
+    <img class="qr" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ViewBag.QRCode))" alt="QR-Code">
+    <a class="btn btn-primary" asp-controller="Moderate" asp-action="ModerateDeliveries" asp-route-groupCode="@Model.GroupCode">Inleveringen bekijken</a>
+</div>
+
+<div hidden id="primColor">@Model.Teacher.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.Teacher.SetUp.SecColor</div>
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+}

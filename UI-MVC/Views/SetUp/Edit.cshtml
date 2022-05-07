@@ -1,0 +1,243 @@
+﻿@using POC.BL.Domain.profile
+@using Microsoft.EntityFrameworkCore.Infrastructure
+@model POC.BL.Domain.setup.SetUp
+
+@{
+    ViewBag.Title = "Set-Up";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/setups.css")" type="text/css" xmlns="http://www.w3.org/1999/html"/>
+
+<div id="setup-edit-save-edit" class="border-bottom">
+    <h2>Set-Up bewerken</h2>
+    <span id="saveSetupSpan"></span>
+    <button class="btn btn-primary" id="saveSetup">
+        <img src="~/resources/Icons/save-white.svg" alt="opslaan">
+        Set-Up Opslaan
+    </button>
+</div>
+
+<br>
+
+<div id="setUpDiv_@Model.SetUpId">
+
+<div class="row">
+    <div class="form-group col-6 ">
+        <label class="">Name:</label>
+        <input class="form-control" id="setUpName" asp-for="Name" type="text"/>
+        <span id="setUpNameSpan"></span>
+    </div>
+    <div class="form-group col-6 ">
+        <label class="">Aangemaakt op:</label>
+        <input class="form-control" value="@Model.CreationDate.ToShortDateString()" type="text" readonly/>
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Leerkrachten opdrachten laten maken</label>
+    @if (Model.CreateTasks)
+    {
+        <label class="switch">
+            <input type="checkbox" checked id="CreateTeacherTask">
+            <span class="slider round"></span>
+        </label>
+    }
+    else
+    {
+        <label class="switch">
+            <input type="checkbox" id="CreateTeacherTask">
+            <span class="slider round"></span>
+        </label>
+    }
+</div>
+
+<div class="form-group">
+    <label>Leerkrachten locaties laten toevoegen</label>
+    @if (Model.AllowLocations)
+    {
+        <label class="switch">
+            <input type="checkbox" checked id="AllowLocations">
+            <span class="slider round"></span>
+        </label>
+    }
+    else
+    {
+        <label class="switch">
+            <input type="checkbox" id="AllowLocations">
+            <span class="slider round"></span>
+        </label>
+    }
+</div>
+
+<div class="row">
+    <div class="col">
+        <div >
+            <img class="preview-setup" id="setUpLogo" width="300" height="300" src="https://storage.googleapis.com/@ViewBag.bucketName/Images/@Model.Logo?.Picture" alt="preview setup foto"><br>
+        </div>
+
+        <input value="@Model.Logo" asp-for="Logo" type="file" accept="images/**" id="logo" hidden>
+        <button class="btn btn-light btn-logo">
+            <label class="logo" for="logo">Kies een Logo</label>
+        </button>
+    </div>
+
+
+    <div class="col color-pickers">
+        <div class="form-group">
+            <label>Kies de primaire kleur voor de setup: </label>
+            <input type="color" id="primColor" value="@Model.PrimColor" asp-for="PrimColor">
+        </div>
+
+        <div class="form-group">
+            <label>Kies de secundaire kleur voor de setup: </label>
+            <input type="color" id="secColor" value="@Model.SecColor" asp-for="SecColor">
+        </div>
+    </div>
+
+</div>
+
+<div class="form-group ">
+    <label class="general-text">Algemene Text:</label>
+    <textarea class="form-control" id="setUpGeneralText" asp-for="GeneralText" type="text"></textarea>
+</div>
+<br>
+<div id="setTasksDiv">
+    <div id="setup-edit-add-task">
+        <h3 class="">Opdrachten </h3>
+        <a id="createTask" class="btn btn-primary btn-new-task">
+            <img src="~/resources/Icons/plus-circle-white.svg">
+            nieuwe opdracht
+        </a>
+    </div>
+    <table class="optionsTable table table-hover table-striped" id="taskTable">
+        <thead>
+        <tr>
+            <th scope="col">Opdracht titel</th>
+            <th scope="col" class="text-center">Aantal vragen</th>
+            <th scope="col" class="text-center">Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var task in Model.SetTasks)
+        {
+            <tr>
+                <td>@task.Title</td>
+                @if (task.Questions != null && task.Questions.Any())
+                {
+                    <td class="text-center">@task.Questions.Count</td>
+                }
+                else
+                {
+                    <td class="text-center">0</td>
+                }
+                <td class="text-center">
+                    <a id="editTask_@task.TaskId" class="floatRightButton btn" data-toggle="tooltip" data-placement="bottom" title="Opdracht bewerken">
+                        <img src="~/resources/Icons/pencil-square.svg" alt="bewerken">
+                    </a>
+                    <button type="button" class="floatRightButton remove btn" name="@task.TaskId" id="removeTask_@task.TaskId" data-toggle="tooltip" data-placement="bottom" title="Opdracht verwijderen">
+                        <img src="~/resources/Icons/trash-red.svg" alt="verwijderen">
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col ">
+        <div class="setup-create-titel-info border-bottom">
+            <h3 class="">Profiel Groep:</h3>
+            <div class="tooltip">
+                <img class="extra-info" src="~/resources/Icons/questionmark.svg" alt="extra info groep profiel vragen">
+                <span class="tooltiptext">
+                    Geef hier vragen mee die worden gesteld bij het aanmaken van een groep op deze setup
+                </span>
+            </div>
+        </div>
+        <div class="flex-icons">
+            <h5>Voeg een vraag toe:</h5>
+            <div class="extra-margin">
+                <button class="btn btn-light" id="addGroupProfileQuestion" data-toggle="tooltip" data-placement="bottom" title="open vraag">
+                    <img src="~/resources/Icons/oq.svg" alt="+ openvraag">
+                </button>
+                <button class="btn btn-light" id="addGroupMcProfileQuestion" data-toggle="tooltip" data-placement="bottom" title="meerkeuzen vraag">
+                    <img src="~/resources/Icons/mc.svg" alt="+ meerkeuzen vraag">
+                </button>
+            </div>
+        </div>
+
+        <div id="groupProfileQuestionsDiv">
+            @if (Model.NeededProfileQuestions != null)
+            {
+                @foreach (var profileQuestion in Model.NeededProfileQuestions)
+                {
+                    switch (profileQuestion)
+                    {
+                        case GroupMCProfileQuestion mcQuestion:
+                            <partial name="_GroupMCProfileQuestion" for="@profileQuestion"/>
+                            break;
+
+                        case GroupProfileQuestion question:
+                            <partial name="_GroupProfileQuestion" for="@profileQuestion"/>
+                            break;
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="setup-create-titel-info border-bottom">
+                        <h3>Profiel Studenten:</h3>
+                        <div class="tooltip">
+                            <img class="extra-info" src="~/resources/Icons/questionmark.svg" alt="extra info groep profiel vragen">
+                            <span class="tooltiptext">
+                                Geef hier vragen mee die worden gesteld die een gebruiker krijgt wanneer die een opdracht wil maken voor de eerste keer op deze setup
+                            </span>
+                        </div>
+                    </div>
+        <div class="flex-icons">
+            <h5>Voeg een vraag toe:</h5>
+            <div class="extra-margin">
+                <button class="btn btn-light" id="addStudentProfileQuestion" data-toggle="tooltip" data-placement="bottom" title="open vraag">
+                    <img src="~/resources/Icons/oq.svg" alt="+ openvraag">
+                </button>
+                <button class="btn btn-light" id="addStudentMcProfileQuestion" data-toggle="tooltip" data-placement="bottom" title="meerkeuzen vraag">
+                    <img src="~/resources/Icons/mc.svg" alt="+ meerkeuzen vraag">
+                </button>
+            </div>
+        </div>
+
+        <div id="studentProfileQuestionsDiv">
+            @if (Model.NeededProfileQuestions != null)
+            {
+                @foreach (var profileQuestion in Model.NeededProfileQuestions)
+                {
+                    switch (profileQuestion)
+                    {
+                        case StudentMCProfileQuestion mcQuestion:
+                            <partial name="_StudentMCProfileQuestion" for="@profileQuestion"/>
+                            break;
+
+                        case StudentProfileQuestion question:
+                            <partial name="_StudentProfileQuestion" for="@profileQuestion"/>
+                            break;
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+</div>
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/editSetUp.entry.js" defer></script>
+    <script type="module" src="~/dist/deleteSetUp.entry.js" defer></script>
+    <script type="module" src="~/dist/deleteTask.entry.js" defer></script>
+}

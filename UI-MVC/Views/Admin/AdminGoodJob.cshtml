@@ -1,0 +1,18 @@
+﻿@model POC.BL.Domain.setup.SetUp
+
+@{
+    ViewBag.Title = "Klaar";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/task.css")" type="text/css"/>
+<div id="finished-div">
+    <h1>Er is een admin aangemaakt!</h1>
+    <h3>Hij zou binnen een paar minuten een mail moeten ontvangen om zijn account te activeren.</h3>
+    <img src="@ViewBag.image" alt="indien-gif"/>
+    <a class="btn btn-secondary" asp-area="" asp-controller="SetUp" asp-action="Index">Terug naar homepagina</a> 
+</div>
+
+@section Scripts {
+    <script type="module" src="~/dist/task.entry.js"></script>
+    
+}

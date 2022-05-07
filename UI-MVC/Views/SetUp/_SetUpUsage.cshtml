@@ -1,0 +1,54 @@
+﻿@model POC.BL.Domain.setup.SetUp
+
+<h2>Gebruik Set-Up</h2>
+
+<div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">Totaal foto's</th>
+            <th scope="col">Totaal studenten</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>@Model.Usage.Sum(x => x.TotalPhotos)</td>
+            <td>@Model.Usage.Sum(x => x.TotalStudents)</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h3>Groups</h3>
+    <table class="optionsTable table table-striped table-hover" id="taskTable">
+        <thead>
+        <tr>
+            <th scope="col">Groepsnaam</th>
+            <th scope="col">Aantal deliveries</th>
+            <th scope="col">Aantal studenten</th>
+            <th>Leerkracht</th>
+        </tr>
+        </thead>
+        <tbody>
+        @if (Model.Usage != null)
+        {
+            @foreach (var groupInfo in Model.Usage)
+            {
+                <tr>
+                    @if (groupInfo.Group == null)
+                    {
+                        <td>Deleted @groupInfo.GroupInfoId</td>
+                    }
+                    else
+                    {
+                        <td>@groupInfo.Group.Name (@groupInfo.Group.GroupCode)</td>
+                    }
+                    <td>@groupInfo.TotalPhotos</td>
+                    <td>@groupInfo.TotalStudents</td>
+                    <td>@groupInfo.TeacherName</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,132 @@
+﻿@model POC.BL.Domain.setup.SetUp 
+
+@{
+    ViewBag.Title = "Create Set-Up";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/dist/setups.css")" type="text/css"/>
+<div id="setup-edit-save-edit">
+    <h2>Set-Up Aanmaken</h2>
+    <div>
+        <span id="saveSetupSpan"></span>
+        <button id="saveSetup" class="btn btn-primary">
+            <img src="~/resources/Icons/save-white.svg" alt="opslaan">
+            Set-Up Aanmaken
+        </button>
+    </div>
+</div>
+
+<div id="setUpDiv_@Model.SetUpId">
+    <div class="form-group">
+        <label>Naam:</label>
+        <input id="setUpName" type="text" placeholder="Geef hier een naam in" class="form-control-options"/>
+        <span id="setUpNameSpan"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Leerkrachten opdrachten laten maken</label>
+        <label class="switch">
+            <input id="CreateTeacherTask" type="checkbox" checked>
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>Leerkrachten locaties laten toevoegen</label>
+        <label class="switch">
+            <input id="AllowLocations" type="checkbox" checked>
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+    <div class="row">
+
+        <div class="col">
+            <div >
+                <img class="preview-setup" id="setUpLogo" width="300" height="300" src="~/resources/empty.PNG" alt="preview setup foto"><br>
+            </div>
+            
+            <input type="file" accept="images/**" id="logo" hidden>
+            <button class="btn btn-light btn-logo">
+                <label class="logo" for="logo">Kies een Logo</label>
+            </button>
+        </div>
+
+        <div class="col color-pickers">
+            <div class="form-group ">
+                <label>Kies de primaire kleur voor de setup: </label>
+                <input type="color" id="primColor" value="@Model.PrimColor">
+            </div>
+
+            <div class="form-group">
+                <label>Kies de secundaire kleur voor de setup: </label>
+                <input type="color" id="secColor" value="@Model.SecColor">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <label class="general-text">Algemene tekst:</label>
+        <textarea id="setUpGeneralText" type="text" placeholder="Geef hier de algemene tekst" class="form-control"></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <div class="setup-create-titel-info border-bottom">
+                <h3 class="">Profiel Groep:</h3>
+                <div class="tooltip">
+                    <img class="extra-info" src="~/resources/Icons/questionmark.svg" alt="extra info groep profiel vragen">
+                    <span class="tooltiptext">
+                        Geef hier vragen mee die worden gesteld bij het aanmaken van een groep op deze setup
+                    </span>
+                </div>
+            </div>
+            <div class="flex-icons">
+                <h5>Voeg een vraag toe:</h5>
+                <div class="extra-margin">
+                    <button id="addGroupProfileQuestion" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="openvraag" >
+
+                        <img src="~/resources/Icons/oq.svg" alt="+ openvraag">
+                    </button>
+                    <button id="addGroupMcProfileQuestion" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="meerkeuzen vraag">
+                        <img src="~/resources/Icons/mc.svg" alt="+ meerkeuzen vraag">
+                    </button>
+                </div>
+            </div>
+            <div id="groupProfileQuestionsDiv"></div>
+        </div>
+
+        <div class="col">
+            <div class="setup-create-titel-info border-bottom">
+                <h3>Profiel Studenten:</h3>
+                <div class="tooltip">
+                    <img class="extra-info" src="~/resources/Icons/questionmark.svg" alt="extra info groep profiel vragen">
+                    <span class="tooltiptext">
+                        Geef hier vragen mee die worden gesteld die een gebruiker krijgt wanneer die een opdracht wil maken voor de eerste keer op deze setup
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex-icons">
+                <h5>Voeg een vraag toe:</h5>
+                <div class="extra-margin">
+                    <button id="addStudentProfileQuestion" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="openvraag">
+                        <img src="~/resources/Icons/oq.svg" alt="+ openvraag">
+                    </button>
+                    <button id="addStudentMcProfileQuestion" class="btn btn-light" data-toggle="tooltip" data-placement="bottom" title="meerkeuzen vraag">
+                        <img src="~/resources/Icons/mc.svg" alt="+ meerkeuzen vraag">
+                    </button>
+                </div>
+            </div>
+            <div id="studentProfileQuestionsDiv"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/createSetUp.entry.js" defer></script>
+    <!--<script type="module" src="~/dist/uploadSetUpLogo.entry.js" defer></script>-->
+}

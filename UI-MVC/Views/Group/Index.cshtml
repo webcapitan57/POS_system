@@ -1,0 +1,117 @@
+﻿@model POC.BL.Domain.user.Teacher
+
+@{
+    ViewBag.SetupName = Model.SetUp.Name;
+    ViewBag.Title = "Groepen";
+    ViewBag.SetupLogo = Model.SetUp.Logo.Picture;
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+
+<section id="section-groups">
+    <h2>Groepen</h2>
+    <div class="card-container">
+        @foreach (var group in Model.Groups)
+        {
+            <div class="card">
+                <div class="color">
+                    <img class="card-img-top" src="~/resources/groep_BW.png" alt="Card image">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@group.Name</h5>
+                    <label class="card-text">Aantal taken: @group.Tasks.Count</label><br>
+                    <label class="card-text">Status: @(group.Active ? "Actief" : "Inactief")</label>
+
+                    <nav class="action-buttons">
+                        <a id="startsession" asp-action="StartSession" asp-route-groupCode="@group.GroupCode"
+                           data-toggle="tooltip" data-placement="bottom" title="Sessie  met QR of groepscode">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                            </svg>
+                        </a>
+                        <a asp-action="Edit" asp-route-groupCode="@group.GroupCode" data-toggle="tooltip" data-placement="bottom" title="Groep bewerken">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>
+                        </a>
+                        <a asp-controller="Group" asp-action="Remove" asp-route-groupCode="@group.GroupCode" data-toggle="tooltip" data-placement="bottom" title="Verwijder groep">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                            </svg>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        }
+
+
+        <div class="card-add card">
+            <a class="svg-btn-primary" asp-controller="Group" asp-action="Create" data-toggle="tooltip" data-placement="bottom" title="Nieuwe groep">
+                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                </svg>
+            </a>
+        </div>
+
+
+    </div>
+</section>
+
+<section id="section-tasks">
+    <h2>Opdrachten</h2>
+    <table class="optionsTable table table-hover table-striped" id="taskgit Table">
+        <thead>
+        <tr>
+            <th scope="col">Opdracht titel</th>
+            <th scope="col" class="text-center">Aantal vragen</th>
+            <th scope="col" class="text-center">Acties</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @foreach (var task in Model.TeacherTasks)
+        {
+            <tr>
+                <td>@task.Title</td>
+                @if (task.Questions != null && task.Questions.Any())
+                {
+                    <td class="text-center">@task.Questions.Count</td>
+                }
+                else
+                {
+                    <td class="text-center">0</td>
+                }
+                <td class="text-center">
+                    <a class="floatRightButton btn" id="editTaskButton_@task.TaskId" data-toggle="tooltip" data-placement="bottom" title="Opdracht bewerken">
+                        <img src="~/resources/Icons/pencil-square.svg" alt="bewerken">
+                    </a>
+                    <button type="button" class="floatRightButton remove btn" name="@task.TaskId" id="removeTask_@task.TaskId" data-toggle="tooltip" data-placement="bottom" title="Opdracht verwijderen">
+                        <img src="~/resources/Icons/trash-red.svg" alt="verwijderen">
+                    </button>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="btn-center">
+        <a class="svg-btn-primary" asp-controller="CreateTask" asp-action="CreateTeachTask">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+            </svg>
+        </a>
+    </div>
+</section>
+
+<div hidden id="primColor">@Model.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.SetUp.SecColor</div>
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/indexGroup.entry.js" defer></script>
+    <script type="module" src="~/dist/group.entry.js" defer></script>
+    <script type="module" src="~/dist/deleteTask.entry.js" defer></script>
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+}

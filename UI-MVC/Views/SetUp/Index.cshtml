@@ -1,0 +1,81 @@
+﻿@model IEnumerable<POC.BL.Domain.setup.SetUp>
+
+@{
+    ViewBag.Title = "Set-Ups";
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/setups.css")" type="text/css"/>
+
+<div id="setup-edit-save-edit">
+    <h2>Set-Ups</h2>
+    <div>
+        <a asp-controller="Admin" asp-action="ModerateMarkedPhotos" class="btn btn-secondary">
+            Marked Photo's
+        </a>
+        <a asp-controller="SetUp" asp-action="Create" class="btn btn-primary">
+            <img src="~/resources/Icons/plus-circle-white.svg" alt="toevoegen">Nieuwe Set-Up
+        </a>
+    </div>
+</div>
+
+<div>
+
+    <table id="setUpsTable" class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Naam</th>
+            <th scope="col">Aangemaakt op</th>
+            <th scope="col">Status</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var setUp in Model)
+        {
+            <tr>
+                <th scope="row">@setUp.SetUpId</th>
+                <td>@setUp.Name</td>
+                <td>@setUp.CreationDate.ToShortDateString()</td>
+                @if (setUp.Archived)
+                {
+                    <td id="archived_@setUp.SetUpId">Gearchiveerd</td>
+                }
+                else
+                {
+                    <td id="archived_@setUp.SetUpId">Actief</td>
+                }
+                <td class="flex-icons">
+                    <a asp-controller="VSet" asp-action="Show" data-toggle="tooltip" title="VlaamseSet" asp-route-setUpId="@setUp.SetUpId" >
+                        <img src="~/resources/Icons/global.svg" alt="VlaamseSet">
+                    </a>
+
+                    <a asp-controller="SetUp" asp-action="Details" data-toggle="tooltip" title="Details" asp-route-setUpId="@setUp.SetUpId">
+                        <img src="~/resources/Icons/eye.svg" alt="details">
+                    </a>
+                    <a asp-controller="SetUp" asp-action="Edit" data-toggle="tooltip" title="Bewerk" asp-route-setUpId="@setUp.SetUpId">
+                        <img src="~/resources/Icons/pencil-square.svg" alt="bewerken">
+                    </a>
+                    <a asp-controller="SetUp" asp-action="ManageAdmins" data-toggle="tooltip" data-placement="bottom" title="Admins bekijken" asp-route-setUpId="@setUp.SetUpId">
+                        <img class="icon" src="~/resources/groep_BW.png" alt="admins">
+                    </a>
+                    <a class="pointer" data-toggle="tooltip" title="Archiveren" id="archiveSetUp_@setUp.SetUpId">
+                        <img src="~/resources/Icons/archive.svg" alt="archiveren">
+                    </a>
+                    <a class="pointer" id="removeSetUp_@setUp.SetUpId" data-toggle="tooltip" data-placement="bottom" title="Verwijder setup">
+                        <img src="~/resources/Icons/trash-red.svg" alt="verwijderen">
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/archiveSetUp.entry.js" defer></script>
+    <script type="module" src="~/dist/deleteSetUp.entry.js" defer></script>
+}

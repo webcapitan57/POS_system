@@ -1,0 +1,40 @@
+﻿@model UI_MVC.Models.EditGroupViewModel
+
+@{
+    ViewBag.SetupLogo = Model.EditGroupTaskViewModel.CurrentGroup.Teacher.SetUp.Logo.Picture;
+    ViewBag.Title = Model.EditGroupTaskViewModel.CurrentGroup + " - bewerken";
+    ViewBag.SetupName = Model.EditGroupTaskViewModel.CurrentGroup.Teacher.SetUp.Name;
+    Layout = "_Layout";
+}
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+
+<form asp-controller="Group" asp-action="Edit" method="post">
+    <input id="btn-edit-back" type="submit" class="btn btn-primary" value="Groep bijwerken"/>
+    <div class="form-row">
+        <div class="col-md-6 form-group">
+            <input hidden asp-for="groupCode"/>
+            <label asp-for="GroupName">Groepsnaam</label>
+            <input asp-for="GroupName" class="form-control"/>
+            <span class="text-danger" asp-validation-for="GroupName"></span>
+        </div>
+        <div class="col-md-6 form-group">
+            <label asp-for="MaxParticipants">Max aantal deelnemers</label>
+            <input asp-for="MaxParticipants" placeholder="Ongelimiteerd" class="form-control">
+            <span class="text-danger" asp-validation-for="MaxParticipants"></span>
+        </div>
+    </div>
+
+</form>
+<p id="groupId" hidden>@Model.EditGroupTaskViewModel.CurrentGroup.GroupCode</p>
+<partial name="_TaskAddOrRemoveToGroup" model="@Model.EditGroupTaskViewModel"/>
+
+<div hidden id="primColor">@Model.EditGroupTaskViewModel.CurrentGroup.Teacher.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.EditGroupTaskViewModel.CurrentGroup.Teacher.SetUp.SecColor</div>
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/addTaskToGroup.entry.js" defer></script>
+    <script type="module" src="~/dist/group.entry.js" defer></script>
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+}

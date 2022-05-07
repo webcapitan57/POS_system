@@ -1,0 +1,660 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp5.0</TargetFramework>
+        <AssemblyName>POC.UI.Web.MVC</AssemblyName>
+        <RootNamespace>UI_MVC</RootNamespace>
+        <IsPackable>false</IsPackable>
+        <MpaRoot>ClientApp\</MpaRoot>
+        <WWWRoot>wwwroot\</WWWRoot>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(MpaRoot)node_modules\**</DefaultItemExcludes>
+    </PropertyGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\BL\BL.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Models\AndroidDTO" />
+        <Folder Include="wwwroot\gifs\admin" />
+        <Folder Include="wwwroot\images" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Google.Cloud.Storage.V1" Version="3.4.0" />
+        <PackageReference Include="Google.Cloud.Vision.V1" Version="2.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.9" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="3.1.9" />
+        <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="5.0.6" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+        <PackageReference Include="Npm" Version="3.5.2" />
+        <PackageReference Include="QRCoder" Version="1.4.1" />
+        <PackageReference Include="SendGrid" Version="9.23.1" />
+    </ItemGroup>
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
+        <_ContentIncludedByDefault Remove="Pages\VSet\Show.cshtml" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\admin\removeMarkedPhoto.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\Gallery\filter.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\Gallery\like.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\Gallery\select.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\Grid\filter.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\Grid\select.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\like.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\Moderate\Slide\select.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\addTaskToGroup.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\addTaskToGroup.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\bootstrap_js.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\bootstrap_js.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\createSetUp.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\createSetUp.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteSetUp.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteSetUp.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteTask.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteTask.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteTeacher.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteTeacher.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\detailsSetUp.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\detailsSetUp.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\editSetUp.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\editSetUp.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\editTask.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\editTask.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesome.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesome.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesome.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesome.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeAll.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeAll.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeAll.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeAll.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeMin.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeMin.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeMin.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\fontAwesomeMin.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\getTeacher.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\getTeacher.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\main.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderate.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderate.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-brands-400.eot" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-brands-400.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-brands-400.ttf" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-brands-400.woff" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-brands-400.woff2" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-regular-400.eot" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-regular-400.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-regular-400.ttf" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-regular-400.woff" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-regular-400.woff2" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-solid-900.eot" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-solid-900.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-solid-900.ttf" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-solid-900.woff" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\public\fonts\fa-solid-900.woff2" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\sendDeliveriesSignalR.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\sendDeliveriesSignalR.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\showAnswers.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\showAnswers.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\showPhotos.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\showPhotos.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\site.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\site.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\site.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\site.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\uploadedPhotos.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\uploadedPhotos.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\uploadPhoto.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\uploadPhoto.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\validation.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\validation.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\images\gifs\1.gif" />
+        <_ContentIncludedByDefault Remove="wwwroot\images\gifs\2.gif" />
+        <_ContentIncludedByDefault Remove="wwwroot\images\gifs\3.gif" />
+        <_ContentIncludedByDefault Remove="wwwroot\images\gifs\4.gif" />
+        <_ContentIncludedByDefault Remove="wwwroot\images\gifs\5.gif" />
+        <_ContentIncludedByDefault Remove="wwwroot\images\gifs\6.gif" />
+        <_ContentIncludedByDefault Remove="Pages\Group\Join.cshtml" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\archiveSetUp.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\archiveSetUp.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\base.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\base.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\base.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\base.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\createTask.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\createTask.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\createTask.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\createTask.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteAnswer.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\deleteAnswer.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterGallery.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterGallery.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterGrid.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterGrid.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterProfilesVset.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterProfilesVset.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterTaskVset.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterTaskVset.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\group.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\group.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\group.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\group.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\identity.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\identity.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\identity.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\identity.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\indexGroup.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\indexGroup.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\likeGallery.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\likeGallery.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\likeModerate.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\likeModerate.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderate.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderate.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateDeliveries.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateDeliveries.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateFlaggedPhotos.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateFlaggedPhotos.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateSelect.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateSelect.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\removeMarkedPhoto.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\removeMarkedPhoto.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\reportVset.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\reportVset.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\saveFilterProfile.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\saveFilterProfile.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectGallery.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectGallery.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectGrid.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectGrid.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectSlide.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectSlide.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectVset.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\selectVset.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\setups.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\setups.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\setups.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\setups.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\switchLogin.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\switchLogin.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\task.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\task.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\task.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\task.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\unmarkPhoto.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\unmarkPhoto.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\uploadSetUpLogo.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\uploadSetUpLogo.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\customTags.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\customTags.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterCustomTags.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\filterCustomTags.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateDeleteAnswer.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateDeleteAnswer.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\register.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\register.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\setupcolors.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\setupcolors.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\admin.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\admin.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\admin.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\admin.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\locationDelivery.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\locationDelivery.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\locationTask.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\locationTask.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateGroup.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\moderateGroup.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\addAdminToSetup.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\addAdminToSetup.entry.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\addSetupToAdmin.entry.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\dist\addSetupToAdmin.entry.js.map" />
+        <_ContentIncludedByDefault Remove="Views\Teacher\Index.cshtml" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\BL\BL.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\resources" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Don't publish the MPA source files, but do show them in the project files list -->
+        <Content Remove="$(MpaRoot)**" />
+        <Content Include="ClientApp\node_modules\.bin\acorn" />
+        <Content Include="ClientApp\node_modules\.bin\acorn.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\acorn.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\browserslist" />
+        <Content Include="ClientApp\node_modules\.bin\browserslist.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\browserslist.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\cssesc" />
+        <Content Include="ClientApp\node_modules\.bin\cssesc.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\cssesc.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\envinfo" />
+        <Content Include="ClientApp\node_modules\.bin\envinfo.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\envinfo.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\import-local-fixture" />
+        <Content Include="ClientApp\node_modules\.bin\import-local-fixture.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\import-local-fixture.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\json5" />
+        <Content Include="ClientApp\node_modules\.bin\json5.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\json5.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\nanoid" />
+        <Content Include="ClientApp\node_modules\.bin\nanoid.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\nanoid.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\node-which" />
+        <Content Include="ClientApp\node_modules\.bin\node-which.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\node-which.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\semver" />
+        <Content Include="ClientApp\node_modules\.bin\semver.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\semver.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-conv" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-conv.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-conv.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-sign" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-sign.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-sign.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-verify" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-verify.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\sshpk-verify.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\terser" />
+        <Content Include="ClientApp\node_modules\.bin\terser.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\terser.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\uuid" />
+        <Content Include="ClientApp\node_modules\.bin\uuid.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\uuid.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\webpack" />
+        <Content Include="ClientApp\node_modules\.bin\webpack-cli" />
+        <Content Include="ClientApp\node_modules\.bin\webpack-cli.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\webpack-cli.ps1" />
+        <Content Include="ClientApp\node_modules\.bin\webpack.cmd" />
+        <Content Include="ClientApp\node_modules\.bin\webpack.ps1" />
+        <Content Include="ClientApp\node_modules\.package-lock.json" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\CHANGELOG.md" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\dist\json-ext.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\dist\json-ext.min.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\LICENSE" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\package.json" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\README.md" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\index.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\parse-chunked.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\stringify-info.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\stringify-stream-browser.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\stringify-stream.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\text-decoder-browser.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\text-decoder.js" />
+        <Content Include="ClientApp\node_modules\@discoveryjs\json-ext\src\utils.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\attribution.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\all.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\all.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\brands.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\brands.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\fontawesome.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\fontawesome.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\regular.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\regular.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\solid.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\solid.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\svg-with-js.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\svg-with-js.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\v4-shims.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\css\v4-shims.min.css" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\all.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\all.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\brands.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\brands.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\conflict-detection.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\conflict-detection.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\fontawesome.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\fontawesome.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\regular.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\regular.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\solid.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\solid.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\v4-shims.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\js\v4-shims.min.js" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\brands.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\fontawesome.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\regular.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\solid.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\v4-shims.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_animated.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_bordered-pulled.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_core.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_fixed-width.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_icons.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_larger.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_list.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_mixins.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_rotated-flipped.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_screen-reader.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_shims.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_stacked.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\less\_variables.less" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\LICENSE.txt" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\metadata\categories.yml" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\metadata\icons.yml" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\metadata\shims.yml" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\metadata\sponsors.yml" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\package.json" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\brands.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\fontawesome.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\regular.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\solid.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\v4-shims.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_animated.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_bordered-pulled.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_core.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_fixed-width.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_icons.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_larger.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_list.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_mixins.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_rotated-flipped.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_screen-reader.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_shims.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_stacked.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\scss\_variables.scss" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\sprites\brands.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\sprites\regular.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\sprites\solid.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\500px.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\accessible-icon.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\accusoft.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\acquisitions-incorporated.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\adn.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\adversal.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\affiliatetheme.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\airbnb.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\algolia.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\alipay.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\amazon-pay.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\amazon.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\amilia.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\android.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\angellist.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\angrycreative.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\angular.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\app-store-ios.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\app-store.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\apper.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\apple-pay.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\apple.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\artstation.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\asymmetrik.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\atlassian.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\audible.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\autoprefixer.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\avianex.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\aviato.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\aws.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bandcamp.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\battle-net.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\behance-square.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\behance.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bimobject.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bitbucket.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bitcoin.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bity.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\black-tie.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\blackberry.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\blogger-b.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\blogger.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bluetooth-b.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bluetooth.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\bootstrap.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\btc.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\buffer.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\buromobelexperte.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\buy-n-large.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\buysellads.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\canadian-maple-leaf.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-amazon-pay.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-amex.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-apple-pay.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-diners-club.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-discover.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-jcb.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-mastercard.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-paypal.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-stripe.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cc-visa.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\centercode.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\centos.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\chrome.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\chromecast.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cloudflare.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cloudscale.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cloudsmith.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cloudversify.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\codepen.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\codiepie.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\confluence.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\connectdevelop.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\contao.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cotton-bureau.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\cpanel.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\creative-commons-by.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\creative-commons-nc-eu.svg" />
+        <Content Include="ClientApp\node_modules\@fortawesome\fontawesome-free\svgs\brands\creative-commons-nc-jp.svg" />
+        <Content Include="ClientApp\src\css\createTask.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\css\group.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\css\identity.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\css\moderate.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\css\setups.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\css\task.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\js\admin\addSetupToAdmin.js" />
+        <Content Include="ClientApp\src\js\admin\removeMarkedPhoto.js" />
+        <Content Include="ClientApp\src\js\admin\unmarkPhoto.js" />
+        <Content Include="ClientApp\src\js\base.js" />
+        <Content Include="ClientApp\src\js\delivery\locationDelivery.js" />
+        <Content Include="ClientApp\src\js\group\group.js" />
+        <Content Include="ClientApp\src\js\group\indexGroup.js">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\js\identity.js" />
+        <Content Include="ClientApp\src\js\Moderate\moderateFlaggedPhotos.js" />
+        <Content Include="ClientApp\src\js\Moderate\Gallery\filterGallery.js" />
+        <Content Include="ClientApp\src\js\Moderate\Gallery\likeGallery.js" />
+        <Content Include="ClientApp\src\js\Moderate\Gallery\selectGallery.js" />
+        <Content Include="ClientApp\src\js\Moderate\Grid\filterGrid.js" />
+        <Content Include="ClientApp\src\js\Moderate\Grid\selectGrid.js" />
+        <Content Include="ClientApp\src\js\Moderate\likeModerate.js" />
+        <Content Include="ClientApp\src\js\Moderate\moderate.js" />
+        <Content Include="ClientApp\src\js\Moderate\moderateDeliveries.js" />
+        <Content Include="ClientApp\src\js\Moderate\moderateSelect.js" />
+        <Content Include="ClientApp\src\js\Moderate\Slide\selectSlide.js" />
+        <Content Include="ClientApp\src\js\setUp\archiveSetUp.js">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\js\setUp\setups.js" />
+        <Content Include="ClientApp\src\js\setUp\uploadSetUpLogo.js">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\js\task\createTask.js" />
+        <Content Include="ClientApp\src\js\task\task.js" />
+        <Content Include="ClientApp\src\js\teacher\getTeacher.js" />
+        <Content Include="ClientApp\src\js\Vset\filterProfilesVset.js" />
+        <Content Include="ClientApp\src\js\Vset\filterTaskVset.js" />
+        <Content Include="ClientApp\src\js\Vset\reportVset.js" />
+        <Content Include="ClientApp\src\js\Vset\selectVset.js" />
+        <None Remove="$(MpaRoot)**" />
+        <None Include="$(MpaRoot)**" Exclude="$(MpaRoot)node_modules\**" />
+        <None Remove="ClientApp\node_modules\**" />
+        <Content Remove="ClientApp\node_modules\**" />
+        <Content Remove="wwwroot\resources\EBstart_2.PNG" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.14" />
+        <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\group\addTaskToGroup.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\group\Moderate.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\setUp\create.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\setUp\delete.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\setUp\details.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\setUp\edit.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\bootstrap\LICENSE" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\cross.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\detail.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\eye.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\list.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\pencil-square.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\pencil.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\plus-circle-green.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\plus-circle-white.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\plus-circle.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\plus-square-dotted.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\save-white.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\save.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\trash-red.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\trash.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\Icons\ui-radios.svg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\EB (2).jpg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\EBstart (2).PNG" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\EBstart.PNG" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\edubox start (2).PNG" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\edubox.jpg" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\edubox.png" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\images\TreeCompany.png" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation-unobtrusive\LICENSE.txt" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-validation\LICENSE.md" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\dist\jquery.min.map" />
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery\LICENSE.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="ClientApp\src\css\base.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\css\site.css">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\js\delivery\uploadPhoto.js" />
+        <Content Include="ClientApp\src\js\group\addTaskToGroup.js" />
+        <Content Include="ClientApp\src\js\setUp\createSetUp.js" />
+        <Content Include="ClientApp\src\js\setUp\deleteSetUp.js" />
+        <Content Include="ClientApp\src\js\setUp\detailsSetUp.js" />
+        <Content Include="ClientApp\src\js\setUp\editSetUp.js" />
+        <Content Include="ClientApp\src\js\task\deleteTask.js">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+        <Content Include="ClientApp\src\js\task\editTask.js" />
+        <Content Include="ClientApp\src\js\task\showAnswers.js" />
+        <Content Include="ClientApp\src\js\task\showPhotos.js" />
+        <Content Include="ClientApp\src\js\task\uploadedPhotos.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="ClientApp\node_modules\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="ClientApp\node_modules\**" />
+    </ItemGroup>
+
+    <Target Name="NpmInstall" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(MpaRoot)node_modules') ">
+        <!-- Ensure Node.js is installed -->
+        <Exec Command="node --version" ContinueOnError="true">
+            <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+        </Exec>
+        <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+        <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+        <Exec WorkingDirectory="$(MpaRoot)" Command="npm install" />
+    </Target>
+
+    <Target Name="NpmRunBuild" BeforeTargets="Build" DependsOnTargets="NpmInstall">
+        <Exec WorkingDirectory="$(MpaRoot)" Command="npm run build" />
+    </Target>
+
+    <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+        <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+        <Exec WorkingDirectory="$(MpaRoot)" Command="npm install" />
+        <Exec WorkingDirectory="$(MpaRoot)" Command="npm run build" />
+
+        <!-- Include the newly-built files in the publish output -->
+        <ItemGroup>
+            <DistFiles Include="$(WWWRoot)dist\**" />
+            <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+                <RelativePath>%(DistFiles.Identity)</RelativePath>
+                <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+                <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            </ResolvedFileToPublish>
+        </ItemGroup>
+    </Target>
+
+    <Target Name="NpmClean" BeforeTargets="Clean">
+        <RemoveDir Directories="$(WWWRoot)dist" />
+        <RemoveDir Directories="$(MpaRoot)node_modules" />
+    </Target>
+</Project>

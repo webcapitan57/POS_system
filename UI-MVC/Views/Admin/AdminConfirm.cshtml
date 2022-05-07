@@ -1,0 +1,30 @@
+﻿@model UI_MVC.Models.AdminInputConfirmModel
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+
+<body>
+<div class="col-md-4">
+    <form method="post" asp-controller="Admin" asp-action="Confirm">
+        <input asp-for="UserId" hidden>
+        <h4>Stel het wachtwoord van je account in</h4>
+        <hr/>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control"/>
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control"/>
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    </div>
+</body>

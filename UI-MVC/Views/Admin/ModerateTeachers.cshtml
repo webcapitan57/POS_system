@@ -1,0 +1,27 @@
+﻿@model IEnumerable<POC.BL.Domain.user.Teacher>
+
+@{
+    ViewBag.Title = "Moderate Teachers";
+    Layout = "_Layout";
+}
+@* <link rel="stylesheet" href="@Url.Content("~/dist/createTask.css")" type="text/css"/> *@
+
+<h2>Teachers:</h2>
+<table class="table-teachers table table-hover table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Naam</th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody id="teacherTable">
+
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <script type="module" src="~/dist/getTeacher.entry.js" defer></script>
+    <script type="module" src="~/dist/createTask.entry.js" defer></script>
+}

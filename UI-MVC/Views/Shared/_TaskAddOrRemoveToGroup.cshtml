@@ -1,0 +1,111 @@
+﻿@model UI_MVC.Models.EditGroupTaskViewModel
+
+<br>
+<div class="row">
+    <div id="tables-set" class="col-md-6">
+        <label for="setTasks">Taken van @Model.CurrentGroup.Teacher.SetUp.Name</label>
+
+        @if (@Model.SetTasks.Count != 0)
+        {
+            <table id="setTasks" class="table">
+                <thead class="thead">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var task in @Model.SetTasks)
+                {
+                    <tr class=@(Model.AlreadyAddedTasks.Contains(task) ? "bg-primary" : "")>
+                        <th scope="row">@task.TaskId</th>
+                        <td>@task.Title</td>
+                        <td>
+                            @if (@Model.AlreadyAddedTasks.Contains(task))
+                            {
+                                <a class="btn-remove-task">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                                    </svg>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn-add-task">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                    </svg>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div>
+                <i>Geen taken om weer te geven.</i>
+            </div>
+        }
+    </div>
+
+    <div id="tables-teacher" class="col-md-6">
+        <label for="teacherTasks">Eigen taken</label>
+        @if (User.IsInRole("GuestTeacher"))
+        {
+            <p>Eigen taken maken is een functie voor mensen met een account.</p>
+        }
+        else
+        {
+            @if (@Model.TeacherTasks.Count != 0)
+            {
+                <table id="teacherTasks" class="table">
+                    <thead class="thead">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var task in @Model.TeacherTasks)
+                    {
+                        <tr class=@(Model.AlreadyAddedTasks.Contains(task) ? "bg-primary" : "")>
+                            <th scope="row">@task.TaskId</th>
+                            <td>@task.Title</td>
+                            <td>
+                                @if (@Model.AlreadyAddedTasks.Contains(task))
+                                {
+                                    <a class="btn-remove-task">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                                        </svg>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a class="btn-add-task">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                                        </svg>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div>
+                    <i>Geen taken om weer te geven.</i>
+                </div>
+            }
+        }
+        
+    </div>
+</div>

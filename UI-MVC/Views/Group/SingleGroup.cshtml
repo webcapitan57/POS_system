@@ -1,0 +1,47 @@
+﻿@model POC.BL.Domain.user.Group
+
+@{
+    ViewBag.SetupName = Model.Teacher.SetUp.Name;
+    ViewBag.SetupLogo = Model.Teacher.SetUp.Logo.Picture;
+    ViewBag.Title = Model.Name;
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="@Url.Content("~/dist/group.css")" type="text/css"/>
+
+<div class="card-container">
+    <div class="card">
+        <div class="color">
+            <img class="card-img-top" src="~/resources/groep_BW.png" alt="Card image">
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <label class="card-text">Groepcode: @Model.GroupCode</label><br>
+        </div>
+        <nav class="action-buttons">
+            <a id="startsession" asp-action="StartSession" asp-route-groupCode="@Model.GroupCode" data-toggle="tooltip" data-placement="bottom" title="Sessie  met QR of groepscode">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                </svg>
+            </a>
+            <a asp-action="Edit" asp-controller="Group" asp-route-groupCode="@Model.GroupCode" data-toggle="tooltip" data-placement="bottom" title="Groep bewerken">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+            </a>
+
+        </nav>
+       
+    </div>
+    
+</div>
+<br>
+<div hidden id="primColor">@Model.Teacher.SetUp.PrimColor</div>
+<div hidden id="secColor" >@Model.Teacher.SetUp.SecColor</div>
+
+
+@section Scripts
+{
+    <script type="module" src="~/dist/setupcolors.entry.js"></script>
+    <script type="module" src="~/dist/indexGroup.entry.js" defer></script>
+}

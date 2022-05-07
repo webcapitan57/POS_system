@@ -1,0 +1,9 @@
+{
+  "name": "IP1",
+  "version": "1.0.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@microsoft/signalr": "^5.0.6",
+    "@types/googlemaps": "^3.43.3"
+  }
+}
